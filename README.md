@@ -7,7 +7,7 @@
 
 `npm install`
 
-`npm run start`
+`npm app.js`
 
 ## After Changes
 `git add .`

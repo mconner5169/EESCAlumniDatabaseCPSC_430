@@ -3,11 +3,13 @@
 
 `cd EESCAlumniDatabaseCPSC_430`
 
+`echo "mongodb+srv://<username>:<password>@cluster0.na9dw.mongodb.net/<dbname>?retryWrites=true&w=majority" > .env`
+
 `npm install`
 
 `npm run start`
 
-## Changes
+## After Changes
 `git add .`
 
 `git commit -m`

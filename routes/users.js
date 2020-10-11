@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-  console.log('user post hit')
   const username = req.body.username;
 
   const newUser = new User({

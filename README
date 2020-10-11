@@ -1,6 +1,12 @@
-git clone https://github.com/pratimakandel/EESCAlumniDatabaseCPSC_430.git
-npm install
-git add .
-git commit -m
-git push origin master
-heroku push heroku master
+## Setup
+
+``git clone https://github.com/pratimakandel/EESCAlumniDatabaseCPSC_430.git``
+``cd EESCAlumniDatabaseCPSC_430``
+``npm install``
+
+## Changes
+
+``git add .``
+``git commit -m``
+``git push origin master``
+``heroku push heroku master``

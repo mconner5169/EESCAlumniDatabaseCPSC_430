@@ -68,7 +68,7 @@
         created: function () {
             axios({
                     method: 'get',
-                    url: 'https://mongo-project-1.herokuapp.com/users',
+                    url: '/users',
                     responseType: 'json'
                 })
                 .then((response) => {
@@ -81,7 +81,7 @@
                 console.log(this.username)
                 axios({
                     method: "post",
-                    url: "https://mongo-project-1.herokuapp.com/users",
+                    url: "/users",
                     data: {
                         username: this.username
                     }
@@ -94,7 +94,7 @@
                 let userId = user._id
                 axios({
                     method: "delete",
-                    url: `https://mongo-project-1.herokuapp.com/users/${userId}`,
+                    url: `/users/${userId}`,
 
                 }).then(response => {
                     console.log(response)

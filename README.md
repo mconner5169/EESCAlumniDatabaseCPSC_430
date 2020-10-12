@@ -12,6 +12,8 @@
 
 `cd EESCAlumniDatabaseCPSC_430`
 
+Please go to our Drive to get the username and password 
+
 `echo "ATLAS_URI=mongodb+srv://<username>:<password>@cluster0.na9dw.mongodb.net/alumnidb?retryWrites=true&w=majority" > .env`
 
 `npm install`

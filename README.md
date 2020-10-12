@@ -24,7 +24,7 @@ Please go to our Drive to get the username and password for the command below
 
 `node app.js`
 
-'cd frontend`
+`cd frontend`
 
 `npm run serve`
 

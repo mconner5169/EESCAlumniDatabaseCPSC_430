@@ -1,3 +1,8 @@
+## Requirements
+- Heroku CLI
+- Node.js
+- NPM
+
 ## Setup
 `git clone https://github.com/pratimakandel/EESCAlumniDatabaseCPSC_430.git`
 

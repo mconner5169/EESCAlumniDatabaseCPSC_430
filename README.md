@@ -16,4 +16,4 @@
 
 `git push origin master`
 
-`heroku push heroku master`
+`git push heroku master`

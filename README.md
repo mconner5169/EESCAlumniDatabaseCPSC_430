@@ -12,6 +12,8 @@
 
 `npm install`
 
+`heroku login`
+
 `node app.js`
 
 ## After Changes

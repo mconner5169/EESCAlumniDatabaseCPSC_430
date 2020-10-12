@@ -24,3 +24,5 @@
 `git push origin master`
 
 `git push heroku master`
+
+https://account.mongodb.com/account/login?signedOut=true

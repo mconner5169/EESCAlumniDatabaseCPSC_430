@@ -29,7 +29,9 @@ Please go to our Drive to get the username and password for the command below
 
 `git commit -m`
 
-`cd frontend && npm run build`
+`cd frontend`
+
+`npm run build`
 
 `git push origin master`
 

@@ -4,7 +4,11 @@
 - NPM
 
 ## Setup
-`git clone https://github.com/pratimakandel/EESCAlumniDatabaseCPSC_430.git`
+
+ Fork repo
+ 
+ clone the forked repo
+`git clone https://github.com/<username>/EESCAlumniDatabaseCPSC_430.git`
 
 `cd EESCAlumniDatabaseCPSC_430`
 

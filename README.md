@@ -22,16 +22,12 @@ Please go to our Drive to get the username and password for the command below
 
 `heroku git:remote -a umw-earth-science`
 
-`npm run dev`
+`node app.js`
 
 ## After Changes
 `git add .`
 
 `git commit -m`
-
-`cd frontend`
-
-`npm run build`
 
 `git push origin master`
 

@@ -22,7 +22,10 @@ Please go to our Drive to get the username and password for the command below
 
 `heroku git:remote -a umw-earth-science`
 
-`node app.js`
+## Running Local Server
+
+ To run the app use
+ `npm run start` or `nodemon app.js`
 
 ## After Changes
 `git add .`

@@ -41,11 +41,9 @@ function createAlumniEntries(callback) {
 async.series([
     createAlumniEntries
 ],
-// Optional callback
 function(err, results) {
     if (err) {
         console.log('FINAL ERR: '+err);
     }
-    // All done, disconnect from database
     mongoose.connection.close();
 });

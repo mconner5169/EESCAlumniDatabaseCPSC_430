@@ -9,8 +9,9 @@ var AlumniSchema = new Schema(
         occupation: {type: String, required: true},
         degreeType: {type: String, required: true},
         email: {type: String, required: true},
-        emailList: {type: Boolean, required: true},
-        description: String
+        emailList: {type: Boolean, required: true, default: false},
+        description: String,
+        createdDate: Date
     }
 );
 

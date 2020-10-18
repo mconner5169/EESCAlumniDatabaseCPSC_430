@@ -1,7 +1,7 @@
 {
   "name": "mongo-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "- Heroku CLI\r - Node.js\r - NPM",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -16,6 +16,15 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongo": "^0.1.0",
-    "mongoose": "^5.10.9"
-  }
+    "mongoose": "^5.10.9",
+    "pg": "^8.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mconner5169/EESCAlumniDatabaseCPSC_430.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mconner5169/EESCAlumniDatabaseCPSC_430/issues"
+  },
+  "homepage": "https://github.com/mconner5169/EESCAlumniDatabaseCPSC_430#readme"
 }

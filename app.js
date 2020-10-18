@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const cors = require('cors')
 const bodyParser = require('body-parser')
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3000
 
 
 
@@ -32,7 +32,7 @@ connection.once('open', () => {
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
-let alumniRouter = require('./routes/crud_routes');
+const alumniRouter = require('./routes/crud_routes');
 app.use('/alumni', alumniRouter);
 
 app.get('/', (req, res) => {

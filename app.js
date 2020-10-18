@@ -32,7 +32,7 @@ connection.once('open', () => {
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
-const alumniRouter = require('./routes/crud_routes');
+let alumniRouter = require('./routes/crud_routes');
 app.use('/alumni', alumniRouter);
 
 app.get('/', (req, res) => {

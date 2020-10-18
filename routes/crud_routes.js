@@ -6,7 +6,7 @@ let { body, validationResult } = require('express-validator');
 let Alumni = require('../models/alumni');
 
 
-router.get('/create', (req, res) => {
+router.get('/create', (request, response, next) => {
     console.log(request.body);
     response.sendFile(path.join(__dirname + '/../public/alumni_create.html'));
 });

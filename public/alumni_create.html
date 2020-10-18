@@ -1,22 +1,194 @@
-<h1>Alumni Create</h1>
+<!doctype html>
+<html lang="en">
 
-<form method='POST' action=''>
-    <label for='firstName'>First Name:</label>
-    <input type='text' name='firstName' id='firstName' required>
-    <label for='lastName'>Last Name:</label>
-    <input type='text' name='lastName' id='lastName' required>
-    <label for='gradYear'>Graduation Year:</label>
-    <input type='number' name='gradYear' id='gradYear' required>
-    <label for='degreeType'>Degree Type:</label>
-    <input type='text' name='degreeType' id='degreeType' required>
-    <label for='occupation'>Occupation:</label>
-    <input type='text' name='occupation' id='occupation' required>
-    <label for='email'>email:</label>
-    <input type='text' name='email' id='email' placeholder='johndoe@email.com' required>
-    <label for='emailList'>Would you like to recieve emails?</label>
-    <input type='checkbox' name='emailList' id='emailList' checked> 
-    <label for='description'>Life Description:</label>
-    <input type='text' name='description' id='description'>
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <button type='submit'>Submit</button>
-</form>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <title>EESC Alumni Database</title>
+    <style>
+        body {
+            background-image: url('http://dreamicus.com/data/earth/earth-03.jpg');
+            background-repeat: no-repeat;
+            background-size: 85% 85%;
+            background-attachment: fixed; 
+            background-position: center;
+        }
+        h2 {
+            background-color: midnightblue;
+            background-size: 100% 100%;
+            font-size: 36px;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+        }
+        h3 {
+            text-align: center;
+            color: #ffffff;
+            margin-top: 200px;
+            background-color: limegreen;
+            background-position: center;
+            width:75%;
+            padding: 10px;
+
+        }
+        p {
+            color: #ffffff;
+            padding-right: 20px;
+            padding-left: 20px;
+        }
+        div.transparent {
+            background-color: darkgray;
+            background-color: rgba(0,0,0,0.5);
+            background-size: cover;
+            background-repeat: repeat;
+            background-attachment: fixed;
+            padding-bottom: 200px;
+        }
+        div.form {
+            border: solid black thin;
+            width: 500px;
+            background-color: limegreen;
+        }
+        fieldset {
+            border: none;
+            margin: 0 0 0 -10px;
+            padding: 20px;
+        }
+        label.field {
+            text-align: right;
+            width: 100px;
+            float:left;
+            font-weight: bold;
+        }
+        input.textbox-300 {
+            width: 300px;
+            float: left;
+        }
+        input.textbox-400 {
+            width: 400px;
+            height: 200px;
+            float: left;
+        }
+        fieldset p {
+            color: #ffffff;
+            padding: 10px;
+        }
+        label span, .required {
+            color: red;
+            padding: 5px;
+        }
+        div.rightbutton-style {
+            padding-right: 50px;
+            padding-bottom: 0px;
+            text-align: right;
+        }
+        div.leftbutton-style {
+            padding-left: 100px;
+            padding-bottom: 100px;
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="transparent">
+        <h2>Earth and Environmental Science Alumni Database</h2>
+        <br><br><br><br>
+        <h3>Alumni Information Form</h3>
+        <dev class="form">
+                <form method='POST' action='/'>
+                    <p class="required">* Required</p>
+                    <dev class="fieldset">
+                    <fieldset>
+                    <p><label for='firstName'>First Name:</label>
+                    <input type='text' name='firstName' id='firstName' placeholder='John' required>
+                    <label for='lastName'>Last Name:</label>
+                    <input type='text' name='lastName' id='lastName' placeholder='Doe' required>
+                    <label for='email'>email:</label>
+                    <input type='text' name='email' id='email' placeholder='johndoe@email.com' required>
+                    <br><br>
+                    <label for='gradYear'>Graduation Year:</label>
+                    <input type='text' name='gradYear' id='gradYear' placeholder='YYYY' required>
+                    <label for='degreeType'>Degree Type:</label>
+                    <input type='text' name='degreeType' id='degreeType' placeholder='Geology' required>
+                    <label for='occupation'>Occupation:</label>
+                    <input type='text' name='occupation' id='occupation' placeholder='Geologist' required>
+                    <br><br>
+                    <label for='description'>Personal/Professional Description:</label>
+                    <input type='text' name='description' id='description' placeholder="Tell us about any personal and/or professional accomplishments.">
+                    <br><br>
+                    <label for='emailList'>Would you like to receive email alerts?</label>
+                    <br>
+                    <input type='radio' name='emailList' id='yes' value='yes'>
+                    <label for='yes'>Yes</label><br>
+                    <input type='radio' name='emailList' id='no' value='no'>
+                    <label for='no'>No</label><br>
+                </form>
+            </fieldset>
+        </dev>
+        <div class="rightbutton-style">
+            <button v-on:click.prevent="cancel" class="btn btn-primary">Cancel</button>
+        </div>
+        <div class="leftbutton-style">
+            <button v-on:click.prevent="submit" class="btn btn-primary" type='submit'>Submit</button>
+        </div>
+
+
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+</script>
+</div>
+</body>
+</html>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!',
+            username: "",
+            users: [],
+        },
+        methods: {
+            cancel: function () {
+                axios({
+                    method: "post",
+                    url: "/users",
+                    data: {
+                        username: this.username
+                    }
+                }).then(response => {
+                    location.reload();
+                }).catch(err => console.log(err.message))
+            },
+            submit: function (Alumni) {
+                axios({
+                    method: "post",
+                    url: "/alumni",
+                    data: {
+
+                    }
+
+                }).then(response => {
+                    location.reload();
+                }).catch(err => console.log(err.message))
+            }
+        }
+    })
+</script>

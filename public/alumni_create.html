@@ -49,8 +49,8 @@
         div.fieldSet {
             width: 500px;
             height: 500px;
-            background-repeat: repeat;
             background-color: limegreen;
+            background-size: cover;
         }
         fieldset {
             border: none;
@@ -64,10 +64,12 @@
             font-weight: bold;
         }
         input.textbox-300 {
+            border: solid black thin;
             width: 300px;
             padding:5px;
         }
         input.textbox-400 {
+            border: solid black thin;
             width: 600px;
             height: 150px;
         }
@@ -100,7 +102,7 @@
         <h2>Earth and Environmental Science Alumni Database</h2>
         <h3>Alumni Information Form</h3>
         <dev class="fieldSet">
-                <form method='POST' action='/alumni_create_success.html'>
+                <form method='POST' action='/populatedb.js'>
                     <p class="required">* Required</p>
                     <dev class="fieldset">
                     <fieldset>
@@ -131,7 +133,7 @@
             </form>
         </dev>
         <div class="rightbutton-style">
-            <button v-on:click.prevent="cancel" class="btn btn-primary">Cancel</button>
+            <input type="button" onclick="location.href='/'" class="btn btn-primary" value="Cancel" />
         </div>
         <div class="leftbutton-style">
             <button v-on:click.prevent="submit" class="btn btn-primary" type='submit'>Submit</button>
@@ -159,34 +161,48 @@ integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+
     var app = new Vue({
         el: '#app',
         data: {
-            message: 'Hello Vue!',
-            username: "",
-            users: [],
+            firstName: "",
+            lastName: "",
+            gradYear: 1234,
+            occupation: "",
+            degreeType: "",
+            email: "",
+            emailList: false,
+            description: "",
+            createdDate: Date
+            alumni: []
         },
         methods: {
-            cancel: function () {
-                axios({
-                    method: "post",
-                    url: "/users",
-                    data: {
-                        username: this.username
-                    }
-                }).then(response => {
-                    location.reload();
-                }).catch(err => console.log(err.message))
-            },
             submit: function (Alumni) {
                 axios({
                     method: "post",
-                    url: "/alumni",
+                    url: "/populatedb",
                     data: {
-
+                        firstName: this.firstName,
+                        lastName: this.lastName,
+                        gradYear: this.gradYear,
+                        occupation: this.occupation,
+                        degreeType: this.degreeType,
+                        email: this.email,
+                        emailList: this.emailList,
+                        description: this.description
                     }
-
                 }).then(response => {
                     location.reload();
                 }).catch(err => console.log(err.message))
             }
+            /*cancel: function () {
+                axios({
+                    method: "post",
+                    url: "/",
+                    data: {
+
+                    }
+
+                }).then(response => {
+                    location.reload();
+                }).catch(err => console.log(err.message))
+            }*/
         }
     })
 </script>

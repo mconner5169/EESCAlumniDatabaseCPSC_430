@@ -37,11 +37,7 @@
             padding: 10px;
 
         }
-        p {
-            color: #ffffff;
-            padding-right: 20px;
-            padding-left: 20px;
-        }
+
         div.transparent {
             background-color: darkgray;
             background-color: rgba(0,0,0,0.5);
@@ -50,9 +46,10 @@
             background-attachment: fixed;
             padding-bottom: 200px;
         }
-        div.form {
-            border: solid black thin;
+        div.fieldSet {
             width: 500px;
+            height: 500px;
+            background-repeat: repeat;
             background-color: limegreen;
         }
         fieldset {
@@ -68,30 +65,32 @@
         }
         input.textbox-300 {
             width: 300px;
-            float: left;
+            padding:5px;
         }
         input.textbox-400 {
-            width: 400px;
-            height: 200px;
-            float: left;
+            width: 600px;
+            height: 150px;
         }
         fieldset p {
             color: #ffffff;
             padding: 10px;
+            font-size: 18px;
         }
         label span, .required {
             color: red;
-            padding: 5px;
+            padding: 10px;
         }
         div.rightbutton-style {
             padding-right: 50px;
             padding-bottom: 0px;
             text-align: right;
+            font-size: 20px;
         }
         div.leftbutton-style {
             padding-left: 100px;
             padding-bottom: 100px;
             text-align: left;
+            font-size: 20px;
         }
     </style>
 </head>
@@ -99,38 +98,37 @@
 <body>
     <div class="transparent">
         <h2>Earth and Environmental Science Alumni Database</h2>
-        <br><br><br><br>
         <h3>Alumni Information Form</h3>
-        <dev class="form">
-                <form method='POST' action='/'>
+        <dev class="fieldSet">
+                <form method='POST' action='/alumni_create_success.html'>
                     <p class="required">* Required</p>
                     <dev class="fieldset">
                     <fieldset>
-                    <p><label for='firstName'>First Name:</label>
-                    <input type='text' name='firstName' id='firstName' placeholder='John' required>
-                    <label for='lastName'>Last Name:</label>
-                    <input type='text' name='lastName' id='lastName' placeholder='Doe' required>
-                    <label for='email'>email:</label>
-                    <input type='text' name='email' id='email' placeholder='johndoe@email.com' required>
+                    <p><label class="field" for='firstName'><span>*</span>First Name:</label>
+                    <input type='text' name='firstName' id='firstName' placeholder='John' class="textbox-300" required /></p>
+                    <p><label class="field" for='lastName'><span>*</span>Last Name:</label>
+                    <input class="textbox-300" type='text' name='lastName' id='lastName' placeholder='Doe' required /></p>
+                    <p><label class="field" for='email'><span>*</span>Email:</label>
+                    <input class="textbox-300" type='text' name='email' id='email' placeholder='johndoe@email.com' required /></p>
+                    <br>
+                    <p><label class="field" for='gradYear'><span>*</span>Graduation Year:</label>
+                    <input class="textbox-300" type='text' name='gradYear' id='gradYear' placeholder='YYYY' required /></p>
+                    <p><label class="field" for='degreeType'><span>*</span>Degree Type:</label>
+                    <input class="textbox-300" type='text' name='degreeType' id='degreeType' placeholder='Geology' required /></p>
+                    <p><label class="field" for='occupation'><span>*</span>Occupation:</label>
+                    <input class="textbox-300" type='text' name='occupation' id='occupation' placeholder='If none, type none' required /></p>
+                    <br>
+                    <p><label class="field" for='description'>Personal/Professional Description:</label>
+                    <input class="textbox-400" type='text' name='description' id='description' placeholder="Tell us about any personal and/or professional accomplishments." /></p>
                     <br><br>
-                    <label for='gradYear'>Graduation Year:</label>
-                    <input type='text' name='gradYear' id='gradYear' placeholder='YYYY' required>
-                    <label for='degreeType'>Degree Type:</label>
-                    <input type='text' name='degreeType' id='degreeType' placeholder='Geology' required>
-                    <label for='occupation'>Occupation:</label>
-                    <input type='text' name='occupation' id='occupation' placeholder='Geologist' required>
-                    <br><br>
-                    <label for='description'>Personal/Professional Description:</label>
-                    <input type='text' name='description' id='description' placeholder="Tell us about any personal and/or professional accomplishments.">
-                    <br><br>
-                    <label for='emailList'>Would you like to receive email alerts?</label>
+                    <p><label class="field" for='emailList'>Would you like to receive email alerts?</label>
                     <br>
                     <input type='radio' name='emailList' id='yes' value='yes'>
                     <label for='yes'>Yes</label><br>
                     <input type='radio' name='emailList' id='no' value='no'>
-                    <label for='no'>No</label><br>
-                </form>
-            </fieldset>
+                    <label for='no'>No</label><br></p>
+                </fieldset>
+            </form>
         </dev>
         <div class="rightbutton-style">
             <button v-on:click.prevent="cancel" class="btn btn-primary">Cancel</button>

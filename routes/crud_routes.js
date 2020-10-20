@@ -29,7 +29,7 @@ router.post('/create', [
     (request, response, next) => {
 
 
-        console.log(request.body)
+        console.log(request.body);
         const errors = validationResult(request);
 
         let alumni = new Alumni ({
@@ -50,7 +50,7 @@ router.post('/create', [
             response.sendFile(path.join(__dirname + '/../public/alumni_create.html'));
         } else {
             // Success block
-            console.log('success block')
+            console.log('success block');
             alumni.save(function (err) {
                 if (err) { return next(err); }
                 response.sendFile(path.join(__dirname + '/../public/alumni_create_success.html'));

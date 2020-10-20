@@ -26,23 +26,32 @@
             color: #ffffff;
             text-align: center;
             position: relative;
+            padding: 12px;
         }
         div.transparent {
             background-color: darkgray;
             background-color: rgba(0,0,0,0.5);
-            padding-bottom: 310px;
+            padding-bottom: 300px;
             background-repeat: repeat;
             background-attachment: fixed;
         }
         div.rightbutton-style {
-            padding-right: 50px;
-            padding-bottom: 0px;
-            text-align: right;
+            margin-right: 50px;
+            margin-left: 400px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 200px 150px auto 200px;
+            font-size: 70px;
         }
         div.leftbutton-style {
-            padding-left: 100px;
-            padding-bottom: 100px;
-            text-align: left;
+            margin-left: 100px;
+            font-size: 30px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 200px 150px auto 200px;
+            font-size: 70px;
         }
     </style>
 </head>
@@ -54,10 +63,10 @@
         <h3 style="text-align: center; color: #ffffff;">Placeholder for Featured Alumnus</h3>
         <br><br><br><br><br><br>
         <div class="rightbutton-style">
-            <button v-on:click.prevent="adminpage" style="background-color: orange" class="btn btn-primary">Continue as Admin</button>
+            <input style="font-size: 70px; text-decoration: underline; width: 300px; height: 150px; font-size: 20px; display: block; font-weight: bold;" type="button" onclick="location.href='/alumni_create.html'" class="btn btn-primary" value="Continue as Alumni" />
         </div>
         <div class="leftbutton-style">
-            <input type="button" onclick="location.href='/alumni_create.html'" class="btn btn-primary" value="Continue as Alumni" />
+            <input style="font-size: 70px; text-decoration: underline; background-color: orange; border-color: orange; width: 300px; height: 150px; font-size: 20px; display: block; font-weight: bold;" type="button" onclick="location.href='/'" class="btn btn-primary" value="Continue as Admin" />
         </div>
         
 

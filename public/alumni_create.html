@@ -51,6 +51,7 @@
             height: 500px;
             background-color: limegreen;
             background-size: cover;
+            margin-top: 20px;
         }
         fieldset {
             border: none;
@@ -102,7 +103,7 @@
         <h2>Earth and Environmental Science Alumni Database</h2>
         <h3>Alumni Information Form</h3>
         <dev class="fieldSet">
-                <form method='POST' action='/populatedb.js'>
+                <form method='POST' action='/form'>
                     <p class="required">* Required</p>
                     <dev class="fieldset">
                     <fieldset>
@@ -130,6 +131,7 @@
                     <input type='radio' name='emailList' id='no' value='no'>
                     <label for='no'>No</label><br></p>
                 </fieldset>
+            </dev>
             </form>
         </dev>
         <div class="rightbutton-style">
@@ -163,7 +165,7 @@ integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+
         data: {
             firstName: "",
             lastName: "",
-            gradYear: 1234,
+            gradYear: 9999,
             occupation: "",
             degreeType: "",
             email: "",
@@ -176,7 +178,7 @@ integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+
             submit: function (Alumni) {
                 axios({
                     method: "post",
-                    url: "/populatedb",
+                    url: "/form",
                     data: {
                         firstName: this.firstName,
                         lastName: this.lastName,
@@ -188,21 +190,10 @@ integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+
                         description: this.description
                     }
                 }).then(response => {
+                    alert("Your form was successfully submitted!");
                     location.reload();
                 }).catch(err => console.log(err.message))
             }
-            /*cancel: function () {
-                axios({
-                    method: "post",
-                    url: "/",
-                    data: {
-
-                    }
-
-                }).then(response => {
-                    location.reload();
-                }).catch(err => console.log(err.message))
-            }*/
         }
     })
 </script>

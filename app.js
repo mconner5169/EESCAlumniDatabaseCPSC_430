@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000
 require('dotenv').config()
 
 app.use(cors())
-//app.use(bodyParser.json())
+app.use(bodyParser.json())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -32,11 +32,28 @@ connection.once('open', () => {
 const usersRouter = require('./routes/users');
 app.use('/users', usersRouter);
 
-let alumniRouter = require('./routes/crud_routes');
+const alumniRouter = require('./routes/crud_routes');
 app.use('/alumni', alumniRouter);
+
+const alumniFormRouter = require('./routes/alumni_form_info');
+app.use('/alumnus', alumniFormRouter);
 
 app.get('/', (req, res) => {
     res.render('index.html');
+});
+
+//catches 404 error
+app.use(function(req, res, next) {
+	next(createError(404));
+});
+
+//error handler
+app.use(function(err, req, res, next) {
+	res.locals.message = err.message;
+	res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+	res.status(err.status || 500);
+	res.render('error');
 });
 
 app.listen(port,

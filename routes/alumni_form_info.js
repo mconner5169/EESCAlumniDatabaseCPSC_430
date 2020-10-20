@@ -53,8 +53,15 @@ if (!errors.isEmpty()) {
 	console.log('success block');
 	alumni.save(function (err) {
 			if (err) { return next(err); }
-			response.sendFile(path.join(__dirname + '/../public/alumni_create_success.html'));
+			//response.sendFile(path.join(__dirname + '/../public/alumni_create_success.html'));
 			});
+	db.collection('alumnis').insertOne(alumni, function(err, collection){
+				if (err) throw err;
+				console.log("Record inserted Successfully");
+			});
+
+	return res.redirect('/../public/alumni_create_success.html');
+
 }
 
 }

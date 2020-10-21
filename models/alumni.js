@@ -11,7 +11,8 @@ var AlumniSchema = new Schema(
         email: {type: String, required: true},
         emailList: {type: Boolean, required: true, default: false},
         description: String,
-        createdDate: Date
+        status: {type: String, enum: ['approved', 'pending'], default: 'pending', required: true},
+        createdDate: {type: Date, default: Date.now()}
     }
 );
 

@@ -6,12 +6,12 @@ let { body, validationResult } = require('express-validator');
 let Alumni = require('../models/alumni');
 
 
-router.get('/create', (request, response, next) => {
+router.get('/form', (request, response, next) => {
     console.log(request.body);
     response.sendFile(path.join(__dirname + '/../public/alumni_create.html'));
 });
 
-router.post('/create', [
+router.post('/form', [
 
 
 

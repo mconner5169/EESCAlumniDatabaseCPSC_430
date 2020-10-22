@@ -41,3 +41,14 @@ https://account.mongodb.com/account/login?signedOut=true
 
 ## Heroku Dashboard
 https://id.heroku.com/login
+
+## Keep Fork Updated
+
+`git remote add upstream https://github.com/pratimakandel/EESCAlumniDatabaseCPSC_430.git `
+
+`git fetch upstream `
+
+`git pull upstream master `
+
+`git push origin master `
+

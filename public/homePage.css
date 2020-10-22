@@ -1,0 +1,17 @@
+rightbutton-style {
+    margin-right: 50px;
+    margin-left: 400px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 200px 190px auto 210px;
+}
+leftbutton-style {
+    margin-left: 100px;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 200px 190px auto 210px;
+}

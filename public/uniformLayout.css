@@ -12,14 +12,7 @@ h2 {
     color: #ffffff;
     text-align: center;
     position: relative;
-    padding: 12px;
-}
-div.transparent {
-    background-color: darkgray;
-    background-color: rgba(0,0,0,0.5);
-    margin-bottom: auto;
-    background-repeat: repeat;
-    padding-top: 50px;
+    padding: 15px;
 }
 div.umwlogo {
     background-image: url('http://4.bp.blogspot.com/-y059U--6enY/WEwcIouzTLI/AAAAAAAABmU/CKFphI3YvAUW9Tj0kNckQcHmrOHx-WBygCK4B/s1600/UMW-logo.tagline_2color-RGB.jpg');

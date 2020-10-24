@@ -1,18 +1,20 @@
-const express = require("express")
-const app = express()
-const mongoose = require('mongoose')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-require('dotenv').config()
-
+const express = require("express");
+const app = express();
+const mongoose = require('mongoose');
+const path = require('path');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 const port = process.env.PORT || 5000
 
+//Load .env file
+require('dotenv').config();
 
-app.use(cors())
+app.use(cors());
+//app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static("public"))
+app.use(express.static("public"));
 
 const uri = process.env.ATLAS_URI
 mongoose.connect(uri, {
@@ -26,10 +28,14 @@ connection.once('open', () => {
     console.log("Connection to MongoDB successful")
 })
 
-const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
-let alumniRouter = require('./routes/crud_routes');
+const adminRouter = require('./routes/admin_routes');
+app.use('/admin', adminRouter);
+
+const alumniRouter = require('./routes/alumni_routes');
 app.use('/alumni', alumniRouter);
 
 app.get('/', (req, res) => {

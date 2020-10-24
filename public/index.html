@@ -8,95 +8,80 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
-    <title>Mongo Users</title>
+    <title>EESC Alumni Database</title>
+    <style>
+        body {
+            background-image: url('http://dreamicus.com/data/earth/earth-03.jpg');
+            background-repeat: no-repeat;
+            background-size: 85% 85%;
+            background-attachment: fixed; 
+            background-position: center;
+        }
+        h2 {
+            background-color: midnightblue;
+            background-size: 100% 100%;
+            font-size: 36px;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+            padding: 12px;
+        }
+        div.transparent {
+            background-color: darkgray;
+            background-color: rgba(0,0,0,0.5);
+            padding-bottom: 250px;
+            background-repeat: repeat;
+            background-attachment: fixed;
+        }
+        div.rightbutton-style {
+            margin-right: 50px;
+            margin-left: 400px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 200px 180px auto 200px;
+            font-size: 70px;
+        }
+        div.leftbutton-style {
+            margin-left: 100px;
+            font-size: 30px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: inline-block;
+            margin: 200px 180px auto 200px;
+            font-size: 70px;
+        }
+    </style>
 </head>
 
-<body>
-    <div class="container">
-        <div id="app">
-            <div v-if="users.length > 0" class="users">
-                <h2>Users</h2>
-                <ul class="list-group">
-                    <li class="list-group-item" v-for="user in users" :key="user.id">
-                        <h2>{{user.username}}</h2>
-                        <p>Created on: {{user.createdAt}}</p>
-                        <button v-on:click.prevent="deleteUser(user)" class="btn btn-danger btn-sm">Delete</button>
-                    </li>
-                </ul>
-                <br>
-            </div>
-            <div v-if="users.length == 0">
-                <h2>No Users</h2>
-            </div>
-            <form>
-                <div class="form-group">
-                    <input type="text" class="form-control" v-model="username" placeholder="New user">
-                </div>
-
-                <button v-on:click.prevent="addUser" class="btn btn-primary">Add User</button>
-            </form>
+    <body>
+        <div class="transparent">
+        <h2>Earth and Environmental Science Alumni Database</h2>
+        <br>
+        <h3 style="text-align: center; color: #ffffff;">Placeholder for Featured Alumnus</h3>
+        <br><br><br><br><br><br>
+        <div class="rightbutton-style">
+            <input style="font-size: 70px; text-decoration: underline; width: 300px; height: 150px; font-size: 20px; display: block; font-weight: bold;" type="button" onclick="location.href='/alumni/form'" class="btn btn-primary" value="Continue as Alumni" />
         </div>
-    </div>
+        <div class="leftbutton-style">
+            <input style="font-size: 70px; text-decoration: underline; background-color: orange; border-color: orange; width: 300px; height: 150px; font-size: 20px; display: block; font-weight: bold;" type="button" onclick="location.href='/admin/dashboard'" class="btn btn-primary" value="Continue as Admin" />
+        </div>
+        
 
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
-    </script>
-</body>
-
-</html>
-
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            message: 'Hello Vue!',
-            username: "",
-            users: [],
-        },
-
-        created: function () {
-            axios({
-                    method: 'get',
-                    url: '/users',
-                    responseType: 'json'
-                })
-                .then((response) => {
-                    this.users = response.data
-                });
-        },
-        methods: {
-            addUser: function () {
-                axios({
-                    method: "post",
-                    url: "/users",
-                    data: {
-                        username: this.username
-                    }
-                }).then(response => {
-                    location.reload();
-                }).catch(err => console.log(err.message))
-            },
-            deleteUser: function (user) {
-                let userId = user._id
-                axios({
-                    method: "delete",
-                    url: `/users/${userId}`,
-
-                }).then(response => {
-                    location.reload();
-                }).catch(err => console.log(err.message))
-            }
-        }
-    })
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous">
 </script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
+</script>
+</div>
+</body>
+</html>

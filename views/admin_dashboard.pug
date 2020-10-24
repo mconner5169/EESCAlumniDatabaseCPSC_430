@@ -1,0 +1,48 @@
+doctype html
+html(lang='en')
+    head
+        title= title
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='/styles/dashboard.css')
+    body
+        header
+            a(href='/') EESC Alumni Database
+            nav
+                ul.nav_links
+                    li
+                        a(href='/admin/create') Add Entry
+                    li 
+                        a(href='/admin/pending') Pending
+                             
+
+        main
+            table#alumni_table
+                thead
+                    tr
+                        th(scope='col') First Name
+                        th(scope='col') Last Name
+                        th(scope='col') Grad Year
+                        th(scope='col') Degree Type
+                        th(scope='col') Occupation
+                        th(scope='col') Email
+                        th(scope='col') Email List
+                        th.hidden Edit
+                        th.hidden Delete
+                tbody
+                    - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                    each alumni in alumni_list
+                        tr(class=alumni.id+'_row')
+                            td #{alumni.firstName}
+                            td #{alumni.lastName}
+                            td #{alumni.gradYear}
+                            td #{alumni.degreeType}
+                            td #{alumni.occupation}
+                            td #{alumni.email}
+                            td #{alumni.emailList}
+                            td
+                                a.edit_button(href='#') Edit
+                            td 
+                                a.delete_button(href='#') Delete
+
+        script(src='/scripts/dashboard.js')

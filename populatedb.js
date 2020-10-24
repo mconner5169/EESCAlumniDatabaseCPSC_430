@@ -1,7 +1,7 @@
 let userArgs = process.argv.slice(2);
 
 let async = require('async');
-let Alumni = require('./models/alumni');
+let Alumni = require('../models/alumni');
 
 let mongoose = require('mongoose');
 let mongoDB = userArgs[0];

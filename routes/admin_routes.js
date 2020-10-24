@@ -48,11 +48,15 @@ router.post('/create', [
                 response.sendFile(path.join(__dirname + '/../public/alumni_create_success.html'));
             });
         }
-
-
     }
-
 ]); 
+
+router.get('/dashboard', (request, response, next) => {
+    Alumni.find().exec(function(err, alumni_list) {
+        response.render('admin_dashboard', {alumni_list: alumni_list})
+    })
+});
+
 
 
 module.exports = router;

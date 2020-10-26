@@ -1,11 +1,10 @@
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const port = process.env.PORT || 3000
-
-
+const port = process.env.PORT || 5000
 
 //Load .env file
 require('dotenv').config();
@@ -29,14 +28,15 @@ connection.once('open', () => {
     console.log("Connection to MongoDB successful")
 })
 
-const usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
+// view engine setup
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "pug");
 
-const alumniRouter = require('./routes/crud_routes');
+const adminRouter = require('./routes/admin_routes');
+app.use('/admin', adminRouter);
+
+const alumniRouter = require('./routes/alumni_routes');
 app.use('/alumni', alumniRouter);
-
-const alumnusRouter = require('./routes/alumni_form_info');
-app.use('/alumnus', alumnusRouter);
 
 app.get('/', (req, res) => {
     res.render('index.html');

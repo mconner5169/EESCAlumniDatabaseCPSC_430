@@ -1,17 +1,24 @@
 
-// If you have any questions lmk
-// General TODO: add ui feedback when adding and updataing UI <- I'll do this
+// EVENT LISTENERS
 
-//const { everyLimit } = require("async");
-
-
-
+//  tbody event listener for displaying update and delete buttons
 document.querySelector('tbody').addEventListener('mouseover', buttonVisibility);
 
-// tbody event listener for displaying update and delete buttons
-function buttonVisibility(event) {
+// table event listener for hiding all update and delete buttons when mouse leaves table
+document.querySelector('table').addEventListener('mouseleave', (event) => {
+    document.querySelectorAll('tbody button').forEach((button) => {
+        button.style.visibility = 'hidden';
+    });
+});
 
-    // Reset the display of all update and delete buttons
+// from event listener for dynamically setting form POST request url 
+document.querySelector('.alumni_form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    POST_alumni_form(document.querySelector('#submit').getAttribute('crud_type') == 'add' ? '/admin/create' : '/admin/' + document.querySelector('form').id + '/update')
+});
+
+
+function buttonVisibility(event) {
     document.querySelectorAll('tbody button').forEach((button) => {
         button.style.visibility = 'hidden';
     });
@@ -30,14 +37,9 @@ function buttonVisibility(event) {
             button.style.visibility = 'visible';
         });
     }
-};
+}
 
-// table event listener for hiding all update and delete buttons when mouse leaves table
-document.querySelector('table').addEventListener('mouseleave', (event) => {
-    document.querySelectorAll('tbody button').forEach((button) => {
-        button.style.visibility = 'hidden';
-    });
-});
+// PAGE RENDERING FUNCTIONS
 
 // Modal handler
 $('#form_modal').on('show.bs.modal', function (event) {
@@ -68,10 +70,62 @@ $('#form_modal').on('show.bs.modal', function (event) {
     document.querySelector('#submit').setAttribute('crud_type', crud_type.toLowerCase());
 });
 
-document.querySelector('.alumni_form').addEventListener('submit', (event) => {
-    event.preventDefault();
-    POST_alumni_form(document.querySelector('#submit').getAttribute('crud_type') == 'add' ? '/admin/create' : '/admin/' + document.querySelector('form').id + '/update')
-});
+// Renders modal with errors
+function renderFormErrors(errors) {
+    errors = JSON.parse(errors);
+    let modal = $('#form_modal')
+    let errorList = document.querySelector('#errorList');
+    errorList.innerHTML = '';
+    for (i in errors) {
+        let errorMsg = document.createTextNode('*' + errors[i].msg)
+        let br = document.createElement('br')
+        errorList.appendChild(errorMsg);
+        errorList.appendChild(br);
+    }
+
+}
+
+// Remove user inputed values in form
+function resetForm() {
+    document.querySelector('#firstName').value = '';
+    document.querySelector('#lastName').value = '';
+    document.querySelector('#gradYear').value = '';
+    document.querySelector('#degreeType').value = '';
+    document.querySelector('#occupation').value = '';
+    document.querySelector('#email').value = '';
+    document.querySelector('#emailList').value = '';
+    document.querySelector('#description').value = '';
+}
+
+
+// Renders table with updated database
+function renderTable() {
+    GET_alumni_entries((alumnis) => {
+        alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr');
+            tr.innerHTML = `
+            <td class='text-truncate'>${alumnis[i].firstName}</td>
+            <td class='text-truncate'>${alumnis[i].lastName}</td>
+            <td class='text-truncate'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate'>${alumnis[i].occupation}</td>
+            <td class='text-truncate'>${alumnis[i].email}</td>
+            <td>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm' alumni_id='${alumnis[i]._id}' onclick='DELETE_alumni(event)'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+    })
+}
+
+
+// AJAX CALLS
 
 // Alumni form post handler using ajax
 function POST_alumni_form(url) {
@@ -101,7 +155,7 @@ function POST_alumni_form(url) {
             renderFormErrors(xhr.responseText);
         } else if (xhr.status == 200) {
             // Success Block
-            GET_alumni_entries();
+            renderTable();
             resetForm();
             $('#form_modal').modal('hide');
         }
@@ -112,76 +166,21 @@ function POST_alumni_form(url) {
     }
 }
 
-// Renders modal with errors
-function renderFormErrors(errors) {
-    errors = JSON.parse(errors);
-    let modal = $('#form_modal')
-    let errorList = document.querySelector('#errorList');
-    errorList.innerHTML = '';
-    for (i in errors) {
-        let errorMsg = document.createTextNode('*' + errors[i].msg)
-        let br = document.createElement('br')
-        errorList.appendChild(errorMsg);
-        errorList.appendChild(br);
-    }
-
-}
-
-// Remove user inputed values in form
-function resetForm() {
-    document.querySelector('#firstName').value = '';
-    document.querySelector('#lastName').value = '';
-    document.querySelector('#gradYear').value = '';
-    document.querySelector('#degreeType').value = '';
-    document.querySelector('#occupation').value = '';
-    document.querySelector('#email').value = '';
-    document.querySelector('#emailList').value = '';
-    document.querySelector('#description').value = '';
-}
-
 // Alumni entries get handler using ajax
-function GET_alumni_entries() {
+function GET_alumni_entries(callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', '/api/alumnis', true);
     
     xhr.send();
 
     xhr.onload = function() {
-        if (xhr.status == 200) {
-            renderTable(xhr.response)
-        }
+        if (callback) {callback(JSON.parse(xhr.response))}
     }
 
     xhr.onerror = function() {
         console.log('XMLHTTPRequest error');
     }
 
-}
-
-// Renders table with updated database
-// res - server response containing all alumni entries
-function renderTable(res) {
-    alumnis = JSON.parse(res);
-    alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-    let tbody = document.querySelector('tbody');
-    let clone = tbody.cloneNode(false);
-    tbody.parentNode.replaceChild(clone, tbody);
-    tbody = clone;
-    tbody.addEventListener('mouseover', buttonVisibility);
-    for (i in alumnis) {
-        let tr = document.createElement('tr');
-        tr.innerHTML = `
-        <td>${alumnis[i].firstName}</td>
-        <td>${alumnis[i].lastName}</td>
-        <td>${alumnis[i].gradYear}</td>
-        <td>${alumnis[i].degreeType}</td>
-        <td>${alumnis[i].occupation}</td>
-        <td>${alumnis[i].email}</td>
-        <td>${alumnis[i].emailList}</td>
-        <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
-        <td class='px-0'><button class='btn btn-danger btn-sm' alumni_id='${alumnis[i]._id}' onclick='DELETE_alumni(event)'>Delete</button></td>`;
-        tbody.appendChild(tr);
-    }
 }
 
 // Returns a singel alumni entry

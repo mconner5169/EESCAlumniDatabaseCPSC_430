@@ -85,10 +85,7 @@ router.post('/:id/update', [
             emailList: req.body.emailList == 'on' ? true : false,
             description: req.body.description,
             status: 'approved'
-        });
-
-        console.log(req.body.occupation)
-        console.log(typeof req.body.occupation)
+        }); 
 
         // check for errors
         if (!errors.isEmpty()) {

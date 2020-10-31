@@ -31,6 +31,7 @@ connection.once('open', () => {
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
+app.set("view engine", "ejs");
 
 const adminRouter = require('./routes/admin_routes');
 app.use('/admin', adminRouter);
@@ -40,6 +41,10 @@ app.use('/alumni', alumniRouter);
 
 const apiRouter = require('./routes/api_routes');
 app.use('/api', apiRouter);
+
+
+const adminLogin = require('./routes/admin_login');
+app.use('/', adminLogin);
 
 app.get('/', (req, res) => {
     res.render('index.html');

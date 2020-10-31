@@ -115,14 +115,14 @@ router.delete('/:id/delete', (req, res, next) => {
 router.get('/dashboard', (req, res, next) => {
     Alumni.find({'status': 'approved'}).exec(function(err, alumni_list) {
         if (err) {return next(err);}
-        res.render('admin_dashboard', {alumni_list: alumni_list})
+        res.render('admin_dashboard.pug', {alumni_list: alumni_list})
     })
 });
 
 router.get('/pending', (req, res, next) => {
     Alumni.find({'status': 'pending'}).exec((err, alumni_list) => {
         if (err) {return next(err);}
-        res.render('pending_dashboard', {alumni_list: alumni_list});
+        res.render('pending_dashboard.pug', {alumni_list: alumni_list});
     });
 });
 

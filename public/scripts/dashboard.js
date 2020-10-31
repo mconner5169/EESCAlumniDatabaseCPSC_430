@@ -2,6 +2,8 @@
 // If you have any questions lmk
 // General TODO: add ui feedback when adding and updataing UI <- I'll do this
 
+//const { everyLimit } = require("async");
+
 
 
 document.querySelector('tbody').addEventListener('mouseover', buttonVisibility);
@@ -38,10 +40,6 @@ document.querySelector('table').addEventListener('mouseleave', (event) => {
 });
 
 // Modal handler
-// TODO: When updating alumni entry, populate form with alumni entry data.
-// Use an ajax call with the xmlhttprequest object to fetch data from database. Youll have to create a new api route to send a single entry.
-// The other option instead of using ajax is to go into the pug file and set the id of the update button and the id of the row to the id of the entry using id=alumni.id, then you can fetch the data from the DOM using document.querySelector(<selector>).value. If you do this way make sure to update the renderForm() method to add the new id's.
-// I would recomend leaving this for last as its rather cumbersome and not that important. 
 $('#form_modal').on('show.bs.modal', function (event) {
     let errorList = document.querySelector('#errorList');
     errorList.innerHTML = '';
@@ -50,15 +48,33 @@ $('#form_modal').on('show.bs.modal', function (event) {
     let modal = $(this);
     modal.find('.modal-title').text(crud_type + ' Alumni Entry');
 
+    if (crud_type == 'Update') {
+        GET_alumni('/api/alumni/' + button[0].getAttribute('alumni_id'), (alumni) => {
+            document.querySelector('#firstName').value = alumni.firstName;
+            document.querySelector('#lastName').value = alumni.lastName;
+            document.querySelector('#email').value = alumni.email;
+            document.querySelector('#gradYear').value = alumni.gradYear;
+            document.querySelector('#degreeType').value = alumni.degreeType;
+            document.querySelector('#occupation').value = alumni.occupation;
+            document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+            document.querySelector('#emailList').checked = alumni.emailList;
+
+            document.querySelector('form').id = button[0].getAttribute('alumni_id');
+        });
+    } else {
+        document.querySelector('form').id = '';
+    }
+
+    document.querySelector('#submit').setAttribute('crud_type', crud_type.toLowerCase());
 });
 
-document.querySelector('.alumni_form').addEventListener('submit', POST_alumni_form);
+document.querySelector('.alumni_form').addEventListener('submit', (event) => {
+    event.preventDefault();
+    POST_alumni_form(document.querySelector('#submit').getAttribute('crud_type') == 'add' ? '/admin/create' : '/admin/' + document.querySelector('form').id + '/update')
+});
 
 // Alumni form post handler using ajax
-// TODO: Make xhr.open dynamic e.g. '/admin/create' when adding and '/admin/update' when updating
-// TODO: When updating we need to send the id of alumni when being updated. If too dificult the id can be sent during an add or an update, doesn't really matter
-function POST_alumni_form(event) {
-    event.preventDefault();
+function POST_alumni_form(url) {
 
     // Get data from DOM
     let firstName = document.querySelector('#firstName').value;
@@ -75,15 +91,14 @@ function POST_alumni_form(event) {
     // AJAX 
     let xhr = new XMLHttpRequest();
 
-    xhr.open('POST', '/admin/create', true);
+    xhr.open('POST', url, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.send(params);
 
-    xhr.onload = function(){
+    xhr.onload = function() {
         if (xhr.status == 500) {  
             // Error Block
             renderFormErrors(xhr.responseText);
-
         } else if (xhr.status == 200) {
             // Success Block
             GET_alumni_entries();
@@ -127,13 +142,14 @@ function resetForm() {
 // Alumni entries get handler using ajax
 function GET_alumni_entries() {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', '/api/alumnis');
+    xhr.open('GET', '/api/alumnis', true);
     
     xhr.send();
 
-
-    xhr.onload = function(){
-        renderTable(xhr.response)
+    xhr.onload = function() {
+        if (xhr.status == 200) {
+            renderTable(xhr.response)
+        }
     }
 
     xhr.onerror = function() {
@@ -162,8 +178,47 @@ function renderTable(res) {
         <td>${alumnis[i].occupation}</td>
         <td>${alumnis[i].email}</td>
         <td>${alumnis[i].emailList}</td>
-        <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update'>Update</button></td>
-        <td class='px-0'><button class='btn btn-danger btn-sm'>Delete</button></td>`;
+        <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+        <td class='px-0'><button class='btn btn-danger btn-sm' alumni_id='${alumnis[i]._id}' onclick='DELETE_alumni(event)'>Delete</button></td>`;
         tbody.appendChild(tr);
     }
+}
+
+// Returns a singel alumni entry
+function GET_alumni(url, callback) {
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', url, true);
+    xhr.send();
+
+    xhr.onload = () => {
+        if (callback) {callback(JSON.parse(xhr.responseText))}
+    }
+
+    xhr.onerror = () => {
+        console.log('XMLHTTMLRequest Error')
+    }
+
+}
+
+function DELETE_alumni(event) {
+    let url = '/admin/' + event.srcElement.getAttribute('alumni_id') + '/delete';
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('DELETE', url, true);
+    xhr.send();
+
+    xhr.onload = () => {
+        if (xhr.status == 200) {
+            GET_alumni_entries();
+            resetForm();
+            $('#form_modal').modal('hide');
+        }
+    }
+
+    xhr.onerror = () => {
+        console.log('XMLHTTMLRequest Error')
+    }
+
+
 }

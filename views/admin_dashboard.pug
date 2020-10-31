@@ -1,48 +1,97 @@
 doctype html
 html(lang='en')
     head
-        title= title
+        title= Dashboard
         meta(charset='utf-8')
         meta(name='viewport', content='width=device-width, initial-scale=1')
         link(rel='stylesheet', href='/styles/dashboard.css')
+        include bootstrap
     body
         header
-            a(href='/') EESC Alumni Database
-            nav
-                ul.nav_links
-                    li
-                        a(href='/admin/create') Add Entry
-                    li 
-                        a(href='/admin/pending') Pending
-                             
+            //  Navbar
+            include nav
 
         main
-            table#alumni_table
-                thead
-                    tr
-                        th(scope='col') First Name
-                        th(scope='col') Last Name
-                        th(scope='col') Grad Year
-                        th(scope='col') Degree Type
-                        th(scope='col') Occupation
-                        th(scope='col') Email
-                        th(scope='col') Email List
-                        th.hidden Edit
-                        th.hidden Delete
-                tbody
-                    - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-                    each alumni in alumni_list
-                        tr(class=alumni.id+'_row')
-                            td #{alumni.firstName}
-                            td #{alumni.lastName}
-                            td #{alumni.gradYear}
-                            td #{alumni.degreeType}
-                            td #{alumni.occupation}
-                            td #{alumni.email}
-                            td #{alumni.emailList}
-                            td
-                                a.edit_button(href='#') Edit
-                            td 
-                                a.delete_button(href='#') Delete
+            div.buffer
+            div.container.mt-3
+                button.btn.btn-outline-success.btn-sm.mb-1(href='#'  data-toggle='modal' data-target='#form_modal' data-type='Add') Add Entry
+
+                // Table
+                table.table.table-hover
+                    thead
+                        tr
+                            th(scope='col') First Name
+                            th(scope='col') Last Name
+                            th(scope='col') Grad Year
+                            th(scope='col') Degree Type
+                            th(scope='col') Occupation
+                            th(scope='col') Email
+                            th(scope='col') Email List
+                            th.hidden Edit
+                            th.hidden Delete
+                    tbody
+                        - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                        each alumni in alumni_list
+                            tr
+                                td #{alumni.firstName}
+                                td #{alumni.lastName}
+                                td #{alumni.gradYear}
+                                td #{alumni.degreeType}
+                                td #{alumni.occupation}
+                                td #{alumni.email}
+                                td #{alumni.emailList}
+                                td.px-0
+                                    button.btn.btn-secondary.btn-sm.mr-3(data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id = alumni._id ) Update
+                                td.px-0
+                                    button.btn.btn-danger.btn-sm(alumni_id = alumni._id onclick='DELETE_alumni(event)') Delete
+
+        // Form Modal
+        div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        h5.modal-title
+                        button.close(type='button' data-dismiss='modal' aria-label='Close')
+                        span(aria-hidden='true') &times;
+                    div.modal-body
+                        form.alumni_form
+                            div#errorList.text-danger
+                            div.form-row
+                                div.col
+                                    div.form-group
+                                        label(for='firstName') First Name
+                                        input#firstName.form-control(type='text' name='firstName')
+                                div.col
+                                    div.form-group
+                                        label(for='lastName') Last Name
+                                        input#lastName.form-control(type='text' name='lastName')
+                            div.form-group
+                                label(for='email') Email
+                                input#email.form-control(type='email' name='email')
+                            div.form-row
+                                div.col
+                                    div.form-group
+                                        label(for='gradYear') Graduation Year
+                                        input#gradYear.form-control(type='number' name='gradYear')
+                                div.col
+                                    div.form-group
+                                        label(for='degreeType') Degree
+                                        input#degreeType.form-control(type='text' name='degreeType')
+                            div.form-group
+                                label(for='occupation') Occupation
+                                input#occupation.form-control(type='text' name='occupation')
+                            div.form-group
+                                label(for='description') Description
+                                textarea#description.form-control(type='text' name='description')
+                            div.form-group.form-check
+                                input#emailList.form-check-input(type='checkbox')
+                                label.form-check-label(for='emailList') Would you like to recieve emails from UMW?
+                            button.btn.btn-secondary.mr-2(type='button' data-dismiss='modal') Close
+                            button.btn.btn-primary#submit(type='submit') Submit
+
+
+                        
+
 
         script(src='/scripts/dashboard.js')
+

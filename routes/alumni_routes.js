@@ -17,7 +17,7 @@ router.post('/form', [
     body('gradYear', 'Graduation Year must be specified').trim().isLength({ min: 1}).escape(),
     body('degreeType', 'Degree Type must be specified').trim().isLength({ min: 1}).escape(),
     body('occupation', 'Occupation must be specified').trim().isLength({ min: 1}).escape(),
-    body('email', 'Email must be specified').trim().isLength({ min: 1}).escape(),
+    body('email', 'Email must be specified').trim().isLength({ min: 1}).escape().isEmail(),
     body('description').trim().optional({ checkFalsy: true }).escape(),
     body('emailList'),
 

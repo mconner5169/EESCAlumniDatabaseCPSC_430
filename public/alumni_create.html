@@ -85,18 +85,6 @@
             font-size: 20px;
             padding: 10px;
         }
-        label.radio {
-            font-size: 20px;
-            margin-left: 70px;
-            margin-top: -20px;
-            display: block;
-        }
-        input.radiobutton {
-            margin-top: 50px;
-            margin-left: 50px;
-            cursor: pointer;
-            display: block;
-        }
         div.rightbutton-style {
             margin-right: 50px;
             margin-left: 400px;
@@ -117,7 +105,8 @@
 
 <body>
     <div class="transparent">
-        <h2>Earth and Environmental Science Alumni Database</h2>
+         <h2>Earth and Environmental Science Alumni Database
+            <br>College of Arts and Science</h2>
         <h3>Alumni Information Form</h3>
         <dev class="fieldSet">
             <form method='POST' action=''>
@@ -139,7 +128,7 @@
                         <p><label class="field" for='description'>Personal/Professional Description:</label><br><br>
                         <textarea type='text' name='description' id='description' wrap='soft'  style="height: 150px; width: 600px; resize: none;" placeholder="Tell us about any personal and/or professional accomplishments."></textarea></p>
                         <p><label class="field" for='emailList'>Would you like to receive email alerts?</label>
-                        <input style="margin-left: 50px;" type='checkbox' name='emailList' id='emailList' checked>
+                        <input style="margin-left: 50px; height: 20px; width: 20px" type='checkbox' name='emailList' id='emailList' checked></p>
                             <div class="leftbutton-style">
                                 <button style="width: 130px; height: 50px; font-size: 20px; display: block; font-weight: bold; background-color: green; border-color: green;" type='submit' class="btn btn-primary">Submit</button>
                             </div>

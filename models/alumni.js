@@ -6,7 +6,7 @@ var AlumniSchema = new Schema(
         firstName: {type: String, required: true},
         lastName: {type: String, required: true},
         gradYear: {type: Number, required: true},
-        occupation: {type: String, required: true},
+        occupation: {type: String, default: 'N/A'},
         degreeType: {type: String, required: true},
         email: {type: String, required: true},
         emailList: {type: Boolean, required: true, default: false},

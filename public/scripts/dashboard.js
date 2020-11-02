@@ -137,10 +137,10 @@ function POST_alumni_form(url) {
     let degreeType = document.querySelector('#degreeType').value;
     let occupation = document.querySelector('#occupation').value;
     let email = document.querySelector('#email').value;
-    let emailList = document.querySelector('#emailList').value;
+    let emailList = document.querySelector('#emailList').checked;
     let description = document.querySelector('#description').value;
 
-    let params = "firstName="+firstName+"&lastName="+lastName+"&gradYear="+gradYear+"&degreeType="+degreeType+"&occupation="+occupation+"&email="+email+"&emailList="+emailList+"&description"+description;
+    let params = "firstName="+firstName+"&lastName="+lastName+"&gradYear="+gradYear+"&degreeType="+degreeType+"&occupation="+occupation+"&email="+email+"&emailList="+emailList+"&description="+description;
    
     // AJAX 
     let xhr = new XMLHttpRequest();
@@ -209,7 +209,7 @@ function DELETE_alumni(event) {
 
     xhr.onload = () => {
         if (xhr.status == 200) {
-            GET_alumni_entries();
+            renderTable();
             resetForm();
             $('#form_modal').modal('hide');
         }

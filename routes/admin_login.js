@@ -14,7 +14,7 @@ let path = require('path');
 
 router.use(require("express-session")({ 
     secret: "EarthScience", 
-    resave: false, 
+    resave: true, 
     saveUninitialized: true,
 })); 
 router.use(flash());
@@ -41,7 +41,7 @@ router.get("/login", (req, res, next) => {
 }); 
    
 router.get("/secret", isLoggedIn, function (req, res) { 
-    res.render("/admin/dashboard"); 
+    res.send("cONGRATS")
 }); 
   
 // Register an Admin
@@ -52,7 +52,6 @@ var password = "EarthScience"
   */
    
 //Handling user login 
-
 
 router.post('/login', passport.authenticate('local', {
     successRedirect : '/admin/dashboard',
@@ -68,7 +67,11 @@ router.get("/logout", function (req, res) {
 }); 
   
 function isLoggedIn(req, res, next) { 
-    if (req.isAuthenticated()) return next(); 
-    
-} 
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.render('login');  
+    } 
+
+}
 module.exports = router;

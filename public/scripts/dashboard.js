@@ -62,6 +62,8 @@ $('#form_modal').on('show.bs.modal', function (event) {
             document.querySelector('#emailList').checked = alumni.emailList;
 
             document.querySelector('form').id = button[0].getAttribute('alumni_id');
+
+
         });
     } else {
         document.querySelector('form').id = '';
@@ -95,6 +97,8 @@ function resetForm() {
     document.querySelector('#email').value = '';
     document.querySelector('#emailList').value = '';
     document.querySelector('#description').value = '';
+
+    document.querySelector('#fistName').setAttribute('readonly', false);
 }
 
 

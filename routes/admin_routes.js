@@ -1,16 +1,48 @@
 let express = require('express');
 let router = express.Router();
 let path = require('path');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+var flash = require("connect-flash");
+
+let User = require("../models/user.model");
 
 let { body, validationResult } = require('express-validator');
 let Alumni = require('../models/alumni');
 
-// This method is currently never called. To be removed
-router.get('/create', (req, res, next) => {
-    res.sendFile(path.join(__dirname + '/../public/alumni_create.html'));
-});
 
-router.post('/create', [
+router.use(require("express-session")({ 
+    secret: "EarthScience", 
+    resave: true, 
+    saveUninitialized: true,
+})); 
+
+router.use(flash());
+router.use(passport.initialize()); 
+router.use(passport.session()); 
+
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser()); 
+passport.deserializeUser(User.deserializeUser()); 
+
+
+
+router.use((req, res, next) => {
+    res.locals.errorMsg = req.flash('error');
+    res.locals.user = req.user || null;
+    res.locals.currentPath = req.path;
+    next();
+  });
+
+router.get("/login", (req, res, next) => { 
+    res.render("admin_login", {  error : req.flash('error') });
+
+}); 
+   
+
+
+router.post('/create', isLoggedIn, [
 
     // Data validation and sanitization
     body('firstName', 'First Name must be specified').trim().isLength({ min: 1}).escape(),
@@ -57,7 +89,7 @@ router.post('/create', [
 ]); 
 
 
-router.post('/:id/update', [
+router.post('/:id/update', isLoggedIn,  [
 
     // Data validation and sanitization
     body('firstName', 'First Name must be specified').trim().isLength({ min: 1}).escape(),
@@ -105,29 +137,56 @@ router.post('/:id/update', [
     }
 ]);
 
-router.delete('/:id/delete', (req, res, next) => {
+router.delete('/:id/delete', isLoggedIn, (req, res, next) => {
     Alumni.findByIdAndRemove(req.params.id, function deleteAlumni(err) {
         if (err) { return next(err); }
         res.sendStatus(200);
     })
 })
 
-router.get('/dashboard', (req, res, next) => {
+router.get('/dashboard', isLoggedIn, (req, res, next) => {
     Alumni.find({'status': 'approved'}).exec(function(err, alumni_list) {
         if (err) {return next(err);}
         res.render('admin_dashboard.pug', {alumni_list: alumni_list})
     })
 });
 
-router.get('/pending', (req, res, next) => {
+router.get('/pending', isLoggedIn, (req, res, next) => {
     Alumni.find({'status': 'pending'}).exec((err, alumni_list) => {
         if (err) {return next(err);}
         res.render('pending_dashboard.pug', {alumni_list: alumni_list});
     });
 });
+  
+// Register an Admin
+/*
+var username = "admin"
+var password = "EarthScience"  
+  User.register(new User({ username : username, password: password}), password)
+  */
+   
+//Handling user login 
+
+router.post('/login', passport.authenticate('local', {
+    successRedirect : '/admin/dashboard',
+    failureRedirect : '/admin/login',
+    failureFlash : true
+}));
 
 
+//Handling user logout  
+router.get("/logout", function (req, res) { 
+    req.logout(); 
+    res.sendFile(path.join(__dirname + '/../public/index.html'));
+}); 
+  
+function isLoggedIn(req, res, next) { 
+    if (req.isAuthenticated()) {
+        return next();
+    } else {
+        res.render('admin_login.pug');  
+    } 
 
-
+}
 module.exports = router;
 

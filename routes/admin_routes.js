@@ -117,10 +117,7 @@ router.post('/:id/update', isLoggedIn,  [
             emailList: req.body.emailList == 'on' ? true : false,
             description: req.body.description,
             status: 'approved'
-        });
-
-        console.log(req.body.occupation)
-        console.log(typeof req.body.occupation)
+        }); 
 
         // check for errors
         if (!errors.isEmpty()) {
@@ -147,14 +144,14 @@ router.delete('/:id/delete', isLoggedIn, (req, res, next) => {
 router.get('/dashboard', isLoggedIn, (req, res, next) => {
     Alumni.find({'status': 'approved'}).exec(function(err, alumni_list) {
         if (err) {return next(err);}
-        res.render('admin_dashboard.pug', {alumni_list: alumni_list})
+        res.render('admin_dashboard.pug', {title: 'Dashboard', stylesheet: '/styles/dashboard.css', alumni_list: alumni_list})
     })
 });
 
 router.get('/pending', isLoggedIn, (req, res, next) => {
     Alumni.find({'status': 'pending'}).exec((err, alumni_list) => {
         if (err) {return next(err);}
-        res.render('pending_dashboard.pug', {alumni_list: alumni_list});
+        res.render('pending_dashboard.pug', {title: 'Pending', stylesheet: '/styles/dashboard.css', alumni_list: alumni_list});
     });
 });
   

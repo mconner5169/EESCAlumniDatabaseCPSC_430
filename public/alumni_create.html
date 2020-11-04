@@ -9,108 +9,18 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/alumni_form.css" type="text/css"/>
 
     <title>EESC Alumni Database</title>
-    <style>
-        body {
-            background-image: url('http://dreamicus.com/data/earth/earth-03.jpg');
-            background-repeat: no-repeat;
-            background-size: 85% 85%;
-            background-attachment: fixed; 
-            background-position: center;
-        }
-        h2 {
-            background-color: midnightblue;
-            background-size: 100% 100%;
-            font-size: 36px;
-            color: #ffffff;
-            text-align: center;
-            position: relative;
-            padding: 12px;
-        }
-        h3 {
-            text-align: center;
-            color: #000000;
-            margin-top: 50px;
-            background-color: white;
-            margin-left: 400px;
-            width: 50%;
-            padding: 10px;
-
-        }
-        div.transparent {
-            background-color: darkgray;
-            background-color: rgba(0,0,0,0.5);
-            background-size: cover;
-            background-repeat: repeat;
-            background-attachment: fixed;
-            padding-bottom: 200px;
-        }
-        div.fieldSet {
-            width: 500px;
-            height: 500px;
-            margin-top: 20px;
-        }
-        fieldset {
-            background-color: white;
-            width: 60%;
-            margin-left: 320px;
-            margin-top: 50px;
-            padding: 20px;
-        }
-        label.field {
-            text-align: right;
-            float: left;
-            font-weight: bold;
-        }
-        input.textbox-300 {
-            border: solid black thin;
-            width: 300px;
-            margin-left: 50px;
-            padding:5px;
-        }
-        input.textbox-400 {
-            border: solid black thin;
-            margin-top: 20px;
-            width: 600px;
-            height: 150px;
-        }
-        fieldset p {
-            color: #000000;
-            padding: 10px;
-            font-size: 18px;
-        }
-        label span, .required {
-            color: red;
-            font-size: 20px;
-            padding: 10px;
-        }
-        div.rightbutton-style {
-            margin-right: 50px;
-            margin-left: 400px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 10px auto 0px auto;
-        }
-        div.leftbutton-style {
-            margin-left: 100px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: inline-block;
-            margin: 10px auto 0px auto;
-        }
-    </style>
 </head>
 
 <body>
+    <div class="earth">
     <div class="transparent">
          <h2>Earth and Environmental Science Alumni Database
             <br>College of Arts and Science</h2>
         <h3>Alumni Information Form</h3>
-        <dev class="fieldSet">
             <form method='POST' action=''>
-                <dev class="fieldset">
                     <fieldset>
                         <p class="required">* Required</p>
                         <p><label class="field" for='firstName'><span>*</span>First Name:</label>
@@ -136,9 +46,8 @@
                                 <input style="width: 130px; height: 50px; font-size: 20px; display: block; font-weight: bold; background-color: red; border-color: red;" type="button" onclick="location.href='/'" class="btn btn-primary" value="Cancel" />
                             </div>
                     </fieldset>
-                </dev>
             </form>
-        </dev>
     </div>
+</div>
 </body>
 </html>

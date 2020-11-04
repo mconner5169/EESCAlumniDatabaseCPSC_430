@@ -58,9 +58,39 @@ $('#form_modal').on('show.bs.modal', function (event) {
             document.querySelector('#occupation').value = alumni.occupation;
             document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
             document.querySelector('#emailList').checked = alumni.emailList;
+            document.querySelector('form').id = button[0].getAttribute('alumni_id');
+        });
+    } else if (crud_type == 'View') {
+        GET_alumni('/api/alumni/' + button[0].getAttribute('alumni_id'), (alumni) => {
+            document.querySelector('#firstName').value = alumni.firstName;
+            document.querySelector('#firstName').setAttribute('readonly', true);
+
+            document.querySelector('#lastName').value = alumni.lastName;
+            document.querySelector('#lastName').setAttribute('readonly', true);
+
+            document.querySelector('#email').value = alumni.email;
+            document.querySelector('#email').setAttribute('readonly', true);
+
+
+            document.querySelector('#gradYear').value = alumni.gradYear;
+            document.querySelector('#gradYear').setAttribute('readonly', true);
+
+            document.querySelector('#degreeType').value = alumni.degreeType;
+            document.querySelector('#degreeType').setAttribute('readonly', true);
+
+            document.querySelector('#occupation').value = alumni.occupation;
+            document.querySelector('#occupation').setAttribute('readonly', true);
+
+            document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+            document.querySelector('#description').setAttribute('readonly', true);
+
+
+            document.querySelector('#emailList').checked = alumni.emailList;
+            document.querySelector('#emailList').setAttribute('disabled', true);
 
             document.querySelector('form').id = button[0].getAttribute('alumni_id');
         });
+
     } else {
         document.querySelector('form').id = '';
     }
@@ -83,10 +113,11 @@ function POST_alumni_form(url) {
     let degreeType = document.querySelector('#degreeType').value;
     let occupation = document.querySelector('#occupation').value;
     let email = document.querySelector('#email').value;
-    let emailList = document.querySelector('#emailList').value;
+    let emailList = document.querySelector('#emailList').checked;
     let description = document.querySelector('#description').value;
 
-    let params = "firstName="+firstName+"&lastName="+lastName+"&gradYear="+gradYear+"&degreeType="+degreeType+"&occupation="+occupation+"&email="+email+"&emailList="+emailList+"&description"+description;
+
+    let params = "firstName="+firstName+"&lastName="+lastName+"&gradYear="+gradYear+"&degreeType="+degreeType+"&occupation="+occupation+"&email="+email+"&emailList="+emailList+"&description="+description;
    
     // AJAX 
     let xhr = new XMLHttpRequest();

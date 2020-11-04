@@ -29,6 +29,7 @@ html(lang='en')
                             th(scope='col') Email List
                             th.hidden Edit
                             th.hidden Delete
+                            th.hidden View
                     tbody
                         - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
                         each alumni in alumni_list
@@ -44,6 +45,9 @@ html(lang='en')
                                     button.btn.btn-secondary.btn-sm.mr-3(data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id = alumni._id ) Update
                                 td.px-0
                                     button.btn.btn-danger.btn-sm(alumni_id = alumni._id onclick='DELETE_alumni(event)') Delete
+                                td.px-0
+                                    button.btn.btn-info.btn-sm.mr-3(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) View
+                                
 
         // Form Modal
         div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')

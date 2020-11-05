@@ -1,15 +1,9 @@
 doctype html
 html(lang='en')
-    head
-        title= Dashboard
-        meta(charset='utf-8')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
-        link(rel='stylesheet', href='/styles/dashboard.css')
-        include bootstrap
+    include head
     body
-        header
-            //  Navbar
-            include nav
+        //  Navbar
+        include nav
 
         main
             div.buffer
@@ -20,25 +14,25 @@ html(lang='en')
                 table.table.table-hover
                     thead
                         tr
-                            th(scope='col') First Name
-                            th(scope='col') Last Name
-                            th(scope='col') Grad Year
-                            th(scope='col') Degree Type
-                            th(scope='col') Occupation
-                            th(scope='col') Email
-                            th(scope='col') Email List
+                            th.text-truncate(scope='col') First Name
+                            th.text-truncate(scope='col') Last Name
+                            th.text-truncate(scope='col') Grad Year
+                            th.text-truncate(scope='col') Degree Type
+                            th.text-truncate(scope='col') Occupation
+                            th.text-truncate(scope='col') Email
+                            th.text-truncate(scope='col') Email List
                             th.hidden Edit
                             th.hidden Delete
                     tbody
                         - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
                         each alumni in alumni_list
                             tr
-                                td #{alumni.firstName}
-                                td #{alumni.lastName}
-                                td #{alumni.gradYear}
-                                td #{alumni.degreeType}
-                                td #{alumni.occupation}
-                                td #{alumni.email}
+                                td.text-truncate #{alumni.firstName}
+                                td.text-truncate #{alumni.lastName}
+                                td.text-truncate #{alumni.gradYear}
+                                td.text-truncate #{alumni.degreeType}
+                                td.text-truncate #{alumni.occupation}
+                                td.text-truncate #{alumni.email}
                                 td #{alumni.emailList}
                                 td.px-0
                                     button.btn.btn-secondary.btn-sm.mr-3(data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id = alumni._id ) Update

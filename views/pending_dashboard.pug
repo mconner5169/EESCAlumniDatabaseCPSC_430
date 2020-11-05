@@ -1,10 +1,39 @@
 doctype html
 html
-    head
-        meta(charset='utf-8')
-        meta(name='viewport', content='width=device-width, initial-scale=1')
-        link(rel='stylesheet', href='/styles/dashboard.css')
-        include bootstrap
+    include head
     body
         include nav
 
+        main
+            div.buffer
+            div.container.mt-3
+                button.btn.btn-outline-success.btn-sm.mb-1(href='#'  data-toggle='modal' data-target='#form_modal' data-type='Add') Add Entry
+
+                // Table
+                table.table.table-hover
+                    thead
+                        tr
+                            th.text-truncate(scope='col') First Name
+                            th.text-truncate(scope='col') Last Name
+                            th.text-truncate(scope='col') Grad Year
+                            th.text-truncate(scope='col') Degree Type
+                            th.text-truncate(scope='col') Occupation
+                            th.text-truncate(scope='col') Email
+                            th.text-truncate(scope='col') Email List
+                            th.hidden Edit
+                            th.hidden Delete
+                    tbody
+                        - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+                        each alumni in alumni_list
+                            tr
+                                td.text-truncate #{alumni.firstName}
+                                td.text-truncate #{alumni.lastName}
+                                td.text-truncate #{alumni.gradYear}
+                                td.text-truncate #{alumni.degreeType}
+                                td.text-truncate #{alumni.occupation}
+                                td.text-truncate #{alumni.email}
+                                td #{alumni.emailList}
+                                td.px-0
+                                    button.btn.btn-success.btn-sm.mr-3(alumni_id = alumni._id ) Approve
+                                td.px-0
+                                    button.btn.btn-danger.btn-sm(alumni_id = alumni._id onclick='DELETE_alumni(event)') Reject

@@ -41,6 +41,73 @@ function buttonVisibility(event) {
 
 // PAGE RENDERING FUNCTIONS
 
+//Click to expand entry 
+document.querySelector('table tbody').addEventListener('click', function(event) {
+    var tr = event.target;
+    while (tr !== this && !tr.matches("tr")) {
+        tr = tr.parentNode;
+    }
+    if (tr === this) {
+        console.log("No table cell found");
+    } else {
+        toggle();
+    }
+});
+
+// Figure out where this is being used in POST :: Add Entry 
+
+//this doesn't work if I update then want to view after
+//figure out reset 
+function toggle(){
+    $('#form_modal').on('show.bs.modal', function (event) {
+        let errorList = document.querySelector('#errorList');
+        errorList.innerHTML = '';
+        let button = $(event.relatedTarget); 
+        let crud_type = button.data('type'); 
+        let modal = $(this);
+        modal.find('.modal-title').text(crud_type + ' Alumni Entry');
+    
+        if (crud_type == 'Update') {
+            GET_alumni('/api/alumni/' + button[0].getAttribute('alumni_id'), (alumni) => {
+                document.querySelector('#firstName').value = alumni.firstName;
+                document.querySelector('#lastName').value = alumni.lastName;
+                document.querySelector('#email').value = alumni.email;
+                document.querySelector('#gradYear').value = alumni.gradYear;
+                document.querySelector('#degreeType').value = alumni.degreeType;
+                document.querySelector('#occupation').value = alumni.occupation;
+                document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+                document.querySelector('#emailList').checked = alumni.emailList;
+                document.querySelector('form').id = button[0].getAttribute('alumni_id');
+            });
+        } else if (crud_type == 'View') {
+            GET_alumni('/api/alumni/' + button[0].getAttribute('alumni_id'), (alumni) => {
+                document.querySelector('#firstName').value = alumni.firstName;
+                document.querySelector('#firstName').setAttribute('readonly', true);
+                document.querySelector('#lastName').value = alumni.lastName;
+                document.querySelector('#lastName').setAttribute('readonly', true);
+                document.querySelector('#email').value = alumni.email;
+                document.querySelector('#email').setAttribute('readonly', true);
+                document.querySelector('#gradYear').value = alumni.gradYear;
+                document.querySelector('#gradYear').setAttribute('readonly', true);
+                document.querySelector('#degreeType').value = alumni.degreeType;
+                document.querySelector('#degreeType').setAttribute('readonly', true);
+                document.querySelector('#occupation').value = alumni.occupation;
+                document.querySelector('#occupation').setAttribute('readonly', true);
+                document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+                document.querySelector('#description').setAttribute('readonly', true);
+                document.querySelector('#emailList').checked = alumni.emailList;
+                document.querySelector('#emailList').setAttribute('disabled', true);
+                document.querySelector('form').id = button[0].getAttribute('alumni_id');
+                document.querySelector('#submit').setAttribute('style', 'display: none;');
+            });
+        } else {
+            document.querySelector('form').id = '';
+        }
+    
+        document.querySelector('#submit').setAttribute('crud_type', crud_type.toLowerCase());
+    });
+}
+
 // Modal handler
 $('#form_modal').on('show.bs.modal', function (event) {
     let errorList = document.querySelector('#errorList');
@@ -60,10 +127,30 @@ $('#form_modal').on('show.bs.modal', function (event) {
             document.querySelector('#occupation').value = alumni.occupation;
             document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
             document.querySelector('#emailList').checked = alumni.emailList;
-
             document.querySelector('form').id = button[0].getAttribute('alumni_id');
 
 
+        });
+    } else if (crud_type == 'View') {
+        GET_alumni('/api/alumni/' + button[0].getAttribute('alumni_id'), (alumni) => {
+            document.querySelector('#firstName').value = alumni.firstName;
+            document.querySelector('#firstName').setAttribute('readonly', true);
+            document.querySelector('#lastName').value = alumni.lastName;
+            document.querySelector('#lastName').setAttribute('readonly', true);
+            document.querySelector('#email').value = alumni.email;
+            document.querySelector('#email').setAttribute('readonly', true);
+            document.querySelector('#gradYear').value = alumni.gradYear;
+            document.querySelector('#gradYear').setAttribute('readonly', true);
+            document.querySelector('#degreeType').value = alumni.degreeType;
+            document.querySelector('#degreeType').setAttribute('readonly', true);
+            document.querySelector('#occupation').value = alumni.occupation;
+            document.querySelector('#occupation').setAttribute('readonly', true);
+            document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+            document.querySelector('#description').setAttribute('readonly', true);
+            document.querySelector('#emailList').checked = alumni.emailList;
+            document.querySelector('#emailList').setAttribute('disabled', true);
+            document.querySelector('form').id = button[0].getAttribute('alumni_id');
+            document.querySelector('#submit').setAttribute('style', 'display: none;');
         });
     } else {
         document.querySelector('form').id = '';
@@ -98,7 +185,7 @@ function resetForm() {
     document.querySelector('#emailList').value = '';
     document.querySelector('#description').value = '';
 
-    document.querySelector('#fistName').setAttribute('readonly', false);
+    document.querySelector('#firstName').setAttribute('readonly', false);
 }
 
 

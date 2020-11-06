@@ -26,20 +26,19 @@ html(lang='en')
                     tbody
                         - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
                         each alumni in alumni_list
-                            tr(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id)
-                                td #{alumni.firstName}
-                                td #{alumni.lastName}
-                                td #{alumni.gradYear}
-                                td #{alumni.degreeType}
-                                td #{alumni.occupation}
-                                td #{alumni.email}
-                                td #{alumni.emailList}
+                            tr
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.firstName}
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.lastName}
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.gradYear}
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.degreeType}
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.occupation}
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.email}
+                                td(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.emailList}
                                 td.px-0
                                     button.btn.btn-secondary.btn-sm.mr-3(data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id = alumni._id ) Update
                                 td.px-0
                                     button.btn.btn-danger.btn-sm(alumni_id = alumni._id onclick='DELETE_alumni(event)') Delete
                 
-                                
 
         // Form Modal
         div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
@@ -82,7 +81,7 @@ html(lang='en')
                             div.form-group.form-check
                                 input#emailList.form-check-input(type='checkbox')
                                 label.form-check-label(for='emailList') Would you like to receive emails from UMW?
-                            button.btn.btn-secondary.mr-2(type='button' data-dismiss='modal') Close
+                            button.btn.btn-secondary.mr-2#close(type='button' data-dismiss='modal' onclick='resetForm()') Close
                             button.btn.btn-primary#submit(type='submit') Submit
 
 

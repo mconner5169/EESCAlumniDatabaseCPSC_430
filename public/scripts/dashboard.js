@@ -250,7 +250,7 @@ function DELETE_alumni(event) {
         if (xhr.status == 200) {
             renderTable();
             resetForm();
-            $('#form_modal').modal('hide.modal');
+            $('#form_modal').modal('hide');
         }
     }
 

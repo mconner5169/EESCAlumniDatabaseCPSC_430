@@ -12,11 +12,14 @@ router.get('/alumnis', (req, res, next) => {
     });
 });
 
+
 router.get('/alumni/:id', (req, res, next) => {
     Alumni.findById(req.params.id).exec((err, result) => {
         if (err) {return next(err);}
         res.status(200).send(result);
     });
 })
+
+
 
 module.exports = router;

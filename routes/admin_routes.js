@@ -157,11 +157,13 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
   
 
 router.get('/search', isLoggedIn, (req, res, next) => {
-    Alumni.find({'status': 'pending'}).exec((err, alumni_list) => {
+    Alumni.find({occupation: {'$regex': "Student"}}).exec((err, result) => {
         if (err) {return next(err);}
-        res.render('pending_dashboard.pug', {title: 'Pending', stylesheet: '/styles/dashboard.css', alumni_list: alumni_list});
+        res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
 });
+
+
 // Register an Admin
 /*
 var username = "admin"

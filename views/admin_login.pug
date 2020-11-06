@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    link(rel="icon" href="film-camera-clipart-8.ico")
+    link(rel="stylesheet" ,="" href="/styles/admin_login.css")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+  body
+    h1(style="text-align:center") Administration Log In
+    form(action="login" method="POST")
+      .container
+      if errorMsg 
+        p(style="text-align:center; color:red") #{errorMsg}
+        div
+          label(for="uname")
+            b Username
+          input(type="text" placeholder="Enter Username" name="username" required="")
+        div
+          label(for="psw")
+            b Password
+          input(type="password" name="password" placeholder="Enter password" required="")
+          span#error
+        button#Login(type="submit" name="login") Login
+

@@ -1,5 +1,5 @@
 div.earth {
-    background-image: url('http://dreamicus.com/data/earth/earth-03.jpg');
+    background-image: url('earth.jpg');
     background-repeat: no-repeat;
     background-size: 50% 85%;
     background-attachment: fixed; 
@@ -12,15 +12,26 @@ h2 {
     position: relative;
     padding: 15px;
 }
-div.umwlogo {
-    background-image: url('http://4.bp.blogspot.com/-y059U--6enY/WEwcIouzTLI/AAAAAAAABmU/CKFphI3YvAUW9Tj0kNckQcHmrOHx-WBygCK4B/s1600/UMW-logo.tagline_2color-RGB.jpg');
-    background-repeat: no-repeat;
-    background-size: 20% 20%;
-    background-position: top-left;
+h3 {
+    color: black;
+
 }
 div.headerbackground {
+    background-image: url('umw-primary-logo-white.png');
     background-color: rgb(0, 43, 90);
     background-size: 100% 15%;
+}
+div.featurebox {
+    background-color: white;
+    width: 700px;
+    margin-left: 320px;
+    height: auto;
+    min-height: 250px;
+    margin: 2% auto;
+    margin-top: 50px;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
 }
 div.rightbutton-style {
     width: 291;

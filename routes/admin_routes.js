@@ -157,7 +157,7 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
   
 
 router.get('/search', isLoggedIn, (req, res, next) => {
-    Alumni.find({occupation: {'$regex': "Student"}}).exec((err, result) => {
+    Alumni.find({occupation: {'$regex': "res.query"}}).exec((err, result) => {
         if (err) {return next(err);}
         res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
@@ -172,6 +172,16 @@ var password = "EarthScience"
   */
    
 //Handling user login 
+
+router.get("/changepassword", function(req, res){
+User.changePassword(req.body.old, req.body.new)
+                .then(() => {
+                    req.flash('success', 'Password Changed');
+                })
+                .catch((error) => {
+                    console.log(error);
+                })
+});
 
 router.post('/login', passport.authenticate('local', {
     successRedirect : '/admin/dashboard',

@@ -3,6 +3,7 @@ let router = express.Router();
 let path = require('path');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const bodyParser = require("body-parser");
 var flash = require("connect-flash");
 
 let User = require("../models/user.model");
@@ -10,6 +11,7 @@ let User = require("../models/user.model");
 let { body, validationResult } = require('express-validator');
 let Alumni = require('../models/alumni');
 
+router.use(bodyParser.urlencoded({extended : true}));
 
 router.use(require("express-session")({ 
     secret: "EarthScience", 
@@ -37,6 +39,11 @@ router.use((req, res, next) => {
 
 router.get("/login", (req, res, next) => { 
     res.render("admin_login", {  error : req.flash('error') });
+
+}); 
+
+router.get("/change", isLoggedIn, (req, res, next) => { 
+    res.render("change_password", {  error : req.flash('error') });
 
 }); 
    
@@ -157,7 +164,7 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
   
 
 router.get('/search', isLoggedIn, (req, res, next) => {
-    Alumni.find({occupation: {'$regex': "res.query"}}).exec((err, result) => {
+    Alumni.find({occupation: {'$regex': "Student"}}).exec((err, result) => {
         if (err) {return next(err);}
         res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
@@ -165,22 +172,28 @@ router.get('/search', isLoggedIn, (req, res, next) => {
 
 
 // Register an Admin
-/*
-var username = "admin"
-var password = "EarthScience"  
-  User.register(new User({ username : username, password: password}), password)
-  */
+
+//var username = "Pratima"
+//var password = "EarthScience"  
+  //User.register(new User({ username : username, password: password}), "test")
+  
    
 //Handling user login 
 
-router.get("/changepassword", function(req, res){
-User.changePassword(req.body.old, req.body.new)
-                .then(() => {
-                    req.flash('success', 'Password Changed');
-                })
-                .catch((error) => {
-                    console.log(error);
-                })
+router.post("/change", isLoggedIn, function(req, res){
+    User.findById("5f92191883473964e2386e22")
+    .then(foundAdmin => {
+        foundAdmin.changePassword(req.body.oldpassword, req.body.newpassword)
+            .then(() => {
+                res.redirect('/admin/login')
+            })
+            .catch((error) => {
+                res.redirect('/admin/change')
+            })
+    })
+    .catch((error) => {
+        console.log(error);
+    })
 });
 
 router.post('/login', passport.authenticate('local', {
@@ -191,10 +204,20 @@ router.post('/login', passport.authenticate('local', {
 
 
 //Handling user logout  
-router.get("/logout", function (req, res) { 
-    req.logout(); 
-    res.sendFile(path.join(__dirname + '/../public/index.html'));
-}); 
+//router.get("/logout", function (req, res) { 
+  //  req.logout();
+    //res.sendFile(path.join(__dirname + '/../public/index.html'));
+//}); 
+
+router.get('/logout', function(req,res){
+    req.logOut();
+    req.session.destroy(function (err) {
+             res.clearCookie('connect.sid');
+             req.session = null;
+             res.sendFile(path.join(__dirname + '/../public/index.html'));
+       });
+   });
+
   
 function isLoggedIn(req, res, next) { 
     if (req.isAuthenticated()) {

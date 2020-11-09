@@ -164,7 +164,7 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
   
 
 router.get('/search', isLoggedIn, (req, res, next) => {
-    Alumni.find({occupation: {'$regex': "Student"}}).exec((err, result) => {
+    Alumni.find({occupation: {'$regex': req.query.search}}).exec((err, result) => {
         if (err) {return next(err);}
         res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });

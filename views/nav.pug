@@ -14,6 +14,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.fixed-top
                 a.nav-link(href='/admin/change') Change Password
             li.nav-item
                 form(action='/admin/search' method='GET')
-                            input(type='search' id="searchname" name='search' aria-label='Search')
+                            input(type='search' id="searchname" name='search' aria-label='search' placeholder="Search Occupation")
+                            input(type='search' id="searchname1" name='search1' aria-label='search' placeholder="Search Degree Type")
                             button(type='submit') Search
-                    
+                         

@@ -164,10 +164,24 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
   
 
 router.get('/search', isLoggedIn, (req, res, next) => {
-    Alumni.find({occupation: {'$regex': req.query.search}}).exec((err, result) => {
+    occu = req.query.search;
+    degree = req.query.search1;
+    if(occu !== '' && degree === '' ){
+    Alumni.find({occupation: {'$regex': occu}}).exec((err, result) => {
         if (err) {return next(err);}
         res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
+    }else if (degree !== '' && occu === '') {
+        Alumni.find({degreeType: {'$regex': degree}}).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+        });
+    }else if (degree !== '' && occu !== ''){
+        Alumni.find({occupation: {'$regex': occu},degreeType: {'$regex': degree} }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+        });
+    }
 });
 
 

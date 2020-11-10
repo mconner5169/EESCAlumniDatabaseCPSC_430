@@ -15,8 +15,8 @@ router.use(bodyParser.urlencoded({extended : true}));
 
 router.use(require("express-session")({ 
     secret: "EarthScience", 
-    resave: true, 
-    saveUninitialized: true,
+    resave: false, 
+    saveUninitialized: false,
 })); 
 
 router.use(flash());
@@ -169,27 +169,33 @@ router.get('/search', isLoggedIn, (req, res, next) => {
     year = req.query.search2;
     if(occu !== '' && degree === ''){
     Alumni.find({occupation: {'$regex': occu}}).exec((err, result) => {
+        console.log(result)
         if (err) {return next(err);}
         res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
-    }else if (degree !== '' && occu === '') {
+    }else if ((degree !== '' && occu === '') && (year !== '')) {
         Alumni.find({degreeType: {'$regex': degree}}).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
         });
 
-    }else if (degree === '' && occu === '' && year !== null) {
+    }else if ((degree === '' && occu === '') && (year !== '')) {
         Alumni.find({gradYear : year }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
         });
     
-    }else if (degree !== '' && occu !== '' && year !== null){
+    }else if ((degree !== '' && occu !== '') && (year !== '')){
         Alumni.find({occupation: occu ,degreeType: degree, gradYear : year }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-        });
-    }
+    });
+    }else if (degree !== '' && occu !== ''){
+        Alumni.find({occupation: occu , degreeType: degree }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+}
 });
 
 
@@ -232,15 +238,13 @@ router.post('/login', passport.authenticate('local', {
 //}); 
 
 router.get('/logout', function(req,res){
-    req.logOut();
-    req.session.destroy(function (err) {
-             res.clearCookie('connect.sid');
-             req.session = null;
-             res.sendFile(path.join(__dirname + '/../public/index.html'));
-       });
+    req.logout();
+    req.user = null;
+    if (!req.user) 
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        res.redirect('/');
    });
 
-  
 function isLoggedIn(req, res, next) { 
     if (req.isAuthenticated()) {
         return next();

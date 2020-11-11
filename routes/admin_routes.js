@@ -67,7 +67,7 @@ router.post('/create', isLoggedIn, [
             degreeType: req.body.degreeType,
             occupation: req.body.occupation == '' ? 'N/A' : req.body.occupation,
             email: req.body.email,
-            emailList: req.body.emailList == 'on' ? true : false,
+            emailList: req.body.emailList,
             description: req.body.description,
             createdDate: new Date(),
             status: 'approved'
@@ -114,7 +114,7 @@ router.post('/:id/update', isLoggedIn,  [
             degreeType: req.body.degreeType,
             occupation:  req.body.occupation == '' ? 'N/A' : req.body.occupation,
             email: req.body.email,
-            emailList: req.body.emailList == 'on' ? true : false,
+            emailList: req.body.emailList,
             description: req.body.description,
             status: 'approved'
         }); 

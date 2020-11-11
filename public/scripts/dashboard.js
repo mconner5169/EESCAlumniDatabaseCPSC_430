@@ -17,7 +17,6 @@ document.querySelector('.alumni_form').addEventListener('submit', (event) => {
     POST_alumni_form(document.querySelector('#submit').getAttribute('crud_type') == 'add' ? '/admin/create' : '/admin/' + document.querySelector('form').id + '/update')
 });
 
-
 function buttonVisibility(event) {
     document.querySelectorAll('tbody button').forEach((button) => {
         button.style.visibility = 'hidden';
@@ -49,6 +48,7 @@ addDeleteEventListeners();
 
 // PAGE RENDERING FUNCTIONS
 
+
 // Modal handler
 $('#form_modal').on('show.bs.modal', function (event) {
     let errorList = document.querySelector('#errorList');
@@ -68,16 +68,35 @@ $('#form_modal').on('show.bs.modal', function (event) {
             document.querySelector('#occupation').value = alumni.occupation;
             document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
             document.querySelector('#emailList').checked = alumni.emailList;
-
             document.querySelector('form').id = button[0].getAttribute('alumni_id');
-
-
+        });
+    } else if (crud_type == 'View') {
+        GET_alumni('/api/alumni/' + button[0].getAttribute('alumni_id'), (alumni) => {
+            document.querySelector('#firstName').value = alumni.firstName;
+            document.querySelector('#firstName').setAttribute('readonly', true);
+            document.querySelector('#lastName').value = alumni.lastName;
+            document.querySelector('#lastName').setAttribute('readonly', true);
+            document.querySelector('#email').value = alumni.email;
+            document.querySelector('#email').setAttribute('readonly', true);
+            document.querySelector('#gradYear').value = alumni.gradYear;
+            document.querySelector('#gradYear').setAttribute('readonly', true);
+            document.querySelector('#degreeType').value = alumni.degreeType;
+            document.querySelector('#degreeType').setAttribute('readonly', true);
+            document.querySelector('#occupation').value = alumni.occupation;
+            document.querySelector('#occupation').setAttribute('readonly', true);
+            document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+            document.querySelector('#description').setAttribute('readonly', true);
+            document.querySelector('#emailList').checked = alumni.emailList;
+            document.querySelector('#emailList').setAttribute('disabled', true);
+            document.querySelector('form').id = button[0].getAttribute('alumni_id');
+            document.querySelector('#submit').setAttribute('style', 'display: none;');
         });
     } else {
         document.querySelector('form').id = '';
     }
 
     document.querySelector('#submit').setAttribute('crud_type', crud_type.toLowerCase());
+   
 });
 
 // Renders modal with errors
@@ -105,7 +124,15 @@ function resetForm() {
     document.querySelector('#email').value = '';
     document.querySelector('#emailList').value = '';
     document.querySelector('#description').value = '';
-
+    document.querySelector('#firstName').removeAttribute('readonly');
+    document.querySelector('#lastName').removeAttribute('readonly');
+    document.querySelector('#gradYear').removeAttribute('readonly');
+    document.querySelector('#degreeType').removeAttribute('readonly');
+    document.querySelector('#occupation').removeAttribute('readonly');
+    document.querySelector('#email').removeAttribute('readonly');
+    document.querySelector('#emailList').removeAttribute('disabled');
+    document.querySelector('#description').removeAttribute('readonly');
+    document.querySelector('#submit').setAttribute('style', 'display: inline-block');
 }
 
 
@@ -119,15 +146,21 @@ function renderTable() {
         tbody = clone;
         tbody.addEventListener('mouseover', buttonVisibility);
         for (i in alumnis) {
-            let tr = document.createElement('tr');
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
             tbody.appendChild(tr);
@@ -136,6 +169,7 @@ function renderTable() {
         addDeleteEventListeners();
     })
 }
+
 
 
 // AJAX CALLS
@@ -178,6 +212,8 @@ function POST_alumni_form(url) {
         console.log('XMLHTTPRequest error');
     }
 }
+
+
 
 // Alumni entries get handler using ajax
 function GET_alumni_entries(callback) {

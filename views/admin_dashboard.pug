@@ -37,7 +37,7 @@ html(lang='en')
                                 td.px-0
                                     button.btn.btn-secondary.btn-sm.mr-3(data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id = alumni._id ) Update
                                 td.px-0
-                                    button.btn.btn-danger.btn-sm(alumni_id = alumni._id onclick='DELETE_alumni(event)') Delete
+                                    button.btn.btn-danger.btn-sm.delete_btn(alumni_id = alumni._id) Delete
 
         // Form Modal
         div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')

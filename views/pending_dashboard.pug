@@ -2,12 +2,13 @@ doctype html
 html
     include head
     body
+        // Navbar
         include nav
 
         main
             div.buffer
             div.container.mt-3
-                button.btn.btn-outline-success.btn-sm.mb-1(href='#'  data-toggle='modal' data-target='#form_modal' data-type='Add') Add Entry
+                button.hidden.btn.btn-outline-success.btn-sm.mb-1(href='#'  data-toggle='modal' data-target='#form_modal' data-type='Add') Add Entry
 
                 // Table
                 table.table.table-hover
@@ -34,6 +35,8 @@ html
                                 td.text-truncate #{alumni.email}
                                 td #{alumni.emailList}
                                 td.px-0
-                                    button.btn.btn-success.btn-sm.mr-3(alumni_id = alumni._id ) Approve
+                                    button.btn.btn-success.btn-sm.mr-3.accept_btn(alumni_id = alumni._id) Accept
                                 td.px-0
-                                    button.btn.btn-danger.btn-sm(alumni_id = alumni._id onclick='DELETE_alumni(event)') Reject
+                                    button.btn.btn-danger.btn-sm.reject_btn(alumni_id = alumni._id) Reject
+
+        script(src='/scripts/pending.js')

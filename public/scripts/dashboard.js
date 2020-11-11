@@ -93,6 +93,10 @@ $('#form_modal').on('show.bs.modal', function (event) {
    
 });
 
+$('#form_modal').on('hide.bs.modal', function (event) {
+    resetForm();
+}); 
+
 // Renders modal with errors
 function renderFormErrors(errors) {
     errors = JSON.parse(errors);

@@ -42,6 +42,8 @@ function buttonVisibility(event) {
 
 
 // Modal handler
+
+
 $('#form_modal').on('show.bs.modal', function (event) {
     let errorList = document.querySelector('#errorList');
     errorList.innerHTML = '';
@@ -90,6 +92,10 @@ $('#form_modal').on('show.bs.modal', function (event) {
     document.querySelector('#submit').setAttribute('crud_type', crud_type.toLowerCase());
    
 });
+
+$('#form_modal').on('hide.bs.modal', function (event) {
+    resetForm();
+}); 
 
 // Renders modal with errors
 function renderFormErrors(errors) {

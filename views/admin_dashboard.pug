@@ -41,12 +41,12 @@ html(lang='en')
                 
 
         // Form Modal
-        div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true')
+        div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true' style="display='block' data-keyboard='false' data-backdrop='static'")
             div.modal-dialog
                 div.modal-content
                     div.modal-header
                         h5.modal-title
-                        button.close(type='button' data-dismiss='modal' aria-label='Close')
+                        button.close(type='button' data-dismiss='modal' aria-label='Close' onclick='resetForm()')
                         span(aria-hidden='true') &times;
                     div.modal-body
                         form.alumni_form

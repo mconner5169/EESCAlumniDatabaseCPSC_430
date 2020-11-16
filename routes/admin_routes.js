@@ -32,8 +32,9 @@ passport.deserializeUser(User.deserializeUser());
 
 router.use((req, res, next) => {
     res.locals.errorMsg = req.flash('error');
-    res.locals.user = req.user || null;
-    res.locals.currentPath = req.path;
+    res.locals.error1 = req.flash('error1');
+    //res.locals.user = req.user || null;
+    //res.locals.currentPath = req.path;
     next();
   });
 
@@ -43,7 +44,7 @@ router.get("/login", (req, res, next) => {
 }); 
 
 router.get("/change", isLoggedIn, (req, res, next) => { 
-    res.render("change_password", {  error : req.flash('error') });
+    res.render("change_password",  {  error : req.flash('error1') });
 
 }); 
    
@@ -179,9 +180,8 @@ router.get('/search', isLoggedIn, (req, res, next) => {
     year = req.query.gradyear;
     if((degree === '' && occu !== '') && (year === '')) {
     Alumni.find({occupation: {'$regex': occu}}).exec((err, result) => {
-        console.log(result)
         if (err) {return next(err);}
-        res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+        res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});     
     });
     }else if ((degree !== '' && occu === '') && (year === '')) {
         Alumni.find({degreeType: {'$regex': degree}}).exec((err, result) => {
@@ -237,6 +237,7 @@ router.post("/change", isLoggedIn, function(req, res){
                 res.redirect('/admin/login')
             })
             .catch((error) => {
+                req.flash('error1', 'Password or username is incorrect' )
                 res.redirect('/admin/change')
             })
     })

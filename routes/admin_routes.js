@@ -230,20 +230,22 @@ router.get('/search', isLoggedIn, (req, res, next) => {
 //Handling user login 
 
 router.post("/change", isLoggedIn, function(req, res){
-    User.findById("5f92191883473964e2386e22")
-    .then(foundAdmin => {
-        foundAdmin.changePassword(req.body.oldpassword, req.body.newpassword)
-            .then(() => {
-                res.redirect('/admin/login')
-            })
-            .catch((error) => {
-                req.flash('error1', 'Password or username is incorrect' )
-                res.redirect('/admin/change')
-            })
-    })
-    .catch((error) => {
-        console.log(error);
-    })
+    if (req.body.username === 'admin'){
+        User.findById("5f92191883473964e2386e22")
+          .then(foundAdmin => {
+            foundAdmin.changePassword(req.body.oldpassword, req.body.newpassword)
+              .then(() => {
+                 res.redirect('/admin/login')
+                })
+              .catch((error) => {
+                    req.flash('error1', 'Password or username is incorrect' )
+                    res.redirect('/admin/change')
+              })
+         })
+        }else {
+            req.flash('error1', 'Password or username is incorrect' )
+            res.redirect('/admin/change')
+}
 });
 
 router.post('/login', passport.authenticate('local', {
@@ -262,9 +264,9 @@ router.post('/login', passport.authenticate('local', {
 router.get('/logout', function(req,res){
     req.logout();
     req.user = null;
-    if (!req.user) 
-        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-        res.redirect('/');
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.redirect('/');
+    
    });
 
 function isLoggedIn(req, res, next) { 

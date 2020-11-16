@@ -141,6 +141,16 @@ router.post('/:id/update', isLoggedIn,  [
     }
 ]);
 
+router.post('/:id/approve', isLoggedIn, (req, res, next) => {
+    Alumni.findById(req.params.id).exec((err, result) => {
+        if (err) {res.sendStatus(500)}
+        Alumni.findByIdAndUpdate(req.params.id, {'status': 'approved'}, (err, result) => {
+            if (err) {return next(err);}
+            res.sendStatus(200);
+        })
+    })
+})  
+
 router.delete('/:id/delete', isLoggedIn, (req, res, next) => {
     Alumni.findByIdAndRemove(req.params.id, function deleteAlumni(err) {
         if (err) { return next(err); }

@@ -38,10 +38,20 @@ function buttonVisibility(event) {
     }
 }
 
+function addDeleteEventListeners() {
+    document.querySelectorAll('.delete_btn').forEach((btn) => { 
+        btn.addEventListener('click', DELETE_alumni);
+    })
+}
+
+addDeleteEventListeners();
+
 // PAGE RENDERING FUNCTIONS
 
 
 // Modal handler
+
+
 $('#form_modal').on('show.bs.modal', function (event) {
     let errorList = document.querySelector('#errorList');
     errorList.innerHTML = '';
@@ -90,6 +100,10 @@ $('#form_modal').on('show.bs.modal', function (event) {
     document.querySelector('#submit').setAttribute('crud_type', crud_type.toLowerCase());
    
 });
+
+$('#form_modal').on('hide.bs.modal', function (event) {
+    resetForm();
+}); 
 
 // Renders modal with errors
 function renderFormErrors(errors) {
@@ -154,9 +168,11 @@ function renderTable() {
             <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
             <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
-            <td class='px-0'><button class='btn btn-danger btn-sm' alumni_id='${alumnis[i]._id}' onclick='DELETE_alumni(event)'>Delete</button></td>`;
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
             tbody.appendChild(tr);
         }
+
+        addDeleteEventListeners();
     })
 }
 

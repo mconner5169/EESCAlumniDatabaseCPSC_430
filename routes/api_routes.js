@@ -26,9 +26,16 @@ router.get('/alumnis/pending', (req, res, next) => {
 // Returns alumni entry 
 router.get('/alumni/:id', (req, res, next) => {
     Alumni.findById(req.params.id).exec((err, result) => {
-        if (err) {return next(err);}
+        if (err) {res.status(500);}
         res.status(200).send(result);
     });
+})
+
+router.get('/alumniByEmail/:email', (req, res, next) => {
+    Alumni.findOne({'email': req.params.email}).exec((err, result) => {
+        if (err) {res.status(500);}
+        res.status(200).send(result);
+    })
 })
 
 module.exports = router;

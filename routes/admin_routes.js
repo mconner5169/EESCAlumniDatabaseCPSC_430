@@ -164,16 +164,16 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
   
 
 router.get('/search', isLoggedIn, (req, res, next) => {
-    occu = req.query.search;
-    degree = req.query.search1;
-    year = req.query.search2;
-    if(occu !== '' && degree === ''){
+    occu = req.query.occupation;
+    degree = req.query.degreetype;
+    year = req.query.gradyear;
+    if((degree === '' && occu !== '') && (year === '')) {
     Alumni.find({occupation: {'$regex': occu}}).exec((err, result) => {
         console.log(result)
         if (err) {return next(err);}
         res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
-    }else if ((degree !== '' && occu === '') && (year !== '')) {
+    }else if ((degree !== '' && occu === '') && (year === '')) {
         Alumni.find({degreeType: {'$regex': degree}}).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
@@ -190,11 +190,22 @@ router.get('/search', isLoggedIn, (req, res, next) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
-    }else if (degree !== '' && occu !== ''){
+    }else if ((degree !== '' && occu !== '') && (year === '')){
         Alumni.find({occupation: occu , degreeType: degree }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
+    }else if ((degree !== '' && occu === '') && (year !== '')){
+        Alumni.find({degreeType: degree , gradYear: year }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    }else if ((degree === '' && occu !== '') && (year !== '')){
+        Alumni.find({occupation: occu , gradYear: year }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    
 }
 });
 

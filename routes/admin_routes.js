@@ -3,6 +3,7 @@ let router = express.Router();
 let path = require('path');
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const bodyParser = require("body-parser");
 var flash = require("connect-flash");
 
 let User = require("../models/user.model");
@@ -10,11 +11,12 @@ let User = require("../models/user.model");
 let { body, validationResult } = require('express-validator');
 let Alumni = require('../models/alumni');
 
+router.use(bodyParser.urlencoded({extended : true}));
 
 router.use(require("express-session")({ 
     secret: "EarthScience", 
-    resave: true, 
-    saveUninitialized: true,
+    resave: false, 
+    saveUninitialized: false,
 })); 
 
 router.use(flash());
@@ -37,6 +39,11 @@ router.use((req, res, next) => {
 
 router.get("/login", (req, res, next) => { 
     res.render("admin_login", {  error : req.flash('error') });
+
+}); 
+
+router.get("/change", isLoggedIn, (req, res, next) => { 
+    res.render("change_password", {  error : req.flash('error') });
 
 }); 
    
@@ -165,14 +172,78 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
     });
 });
   
+
+router.get('/search', isLoggedIn, (req, res, next) => {
+    occu = req.query.occupation;
+    degree = req.query.degreetype;
+    year = req.query.gradyear;
+    if((degree === '' && occu !== '') && (year === '')) {
+    Alumni.find({occupation: {'$regex': occu}}).exec((err, result) => {
+        console.log(result)
+        if (err) {return next(err);}
+        res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    }else if ((degree !== '' && occu === '') && (year === '')) {
+        Alumni.find({degreeType: {'$regex': degree}}).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+        });
+
+    }else if ((degree === '' && occu === '') && (year !== '')) {
+        Alumni.find({gradYear : year }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+        });
+    
+    }else if ((degree !== '' && occu !== '') && (year !== '')){
+        Alumni.find({occupation: occu ,degreeType: degree, gradYear : year }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    }else if ((degree !== '' && occu !== '') && (year === '')){
+        Alumni.find({occupation: occu , degreeType: degree }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    }else if ((degree !== '' && occu === '') && (year !== '')){
+        Alumni.find({degreeType: degree , gradYear: year }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    }else if ((degree === '' && occu !== '') && (year !== '')){
+        Alumni.find({occupation: occu , gradYear: year }).exec((err, result) => {
+            if (err) {return next(err);}
+            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
+    });
+    
+}
+});
+
+
 // Register an Admin
-/*
-var username = "admin"
-var password = "EarthScience"  
-  User.register(new User({ username : username, password: password}), password)
-  */
+
+//var username = "Pratima"
+//var password = "EarthScience"  
+  //User.register(new User({ username : username, password: password}), "test")
+  
    
 //Handling user login 
+
+router.post("/change", isLoggedIn, function(req, res){
+    User.findById("5f92191883473964e2386e22")
+    .then(foundAdmin => {
+        foundAdmin.changePassword(req.body.oldpassword, req.body.newpassword)
+            .then(() => {
+                res.redirect('/admin/login')
+            })
+            .catch((error) => {
+                res.redirect('/admin/change')
+            })
+    })
+    .catch((error) => {
+        console.log(error);
+    })
+});
 
 router.post('/login', passport.authenticate('local', {
     successRedirect : '/admin/dashboard',
@@ -182,11 +253,19 @@ router.post('/login', passport.authenticate('local', {
 
 
 //Handling user logout  
-router.get("/logout", function (req, res) { 
-    req.logout(); 
-    res.sendFile(path.join(__dirname + '/../public/index.html'));
-}); 
-  
+//router.get("/logout", function (req, res) { 
+  //  req.logout();
+    //res.sendFile(path.join(__dirname + '/../public/index.html'));
+//}); 
+
+router.get('/logout', function(req,res){
+    req.logout();
+    req.user = null;
+    if (!req.user) 
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        res.redirect('/');
+   });
+
 function isLoggedIn(req, res, next) { 
     if (req.isAuthenticated()) {
         return next();

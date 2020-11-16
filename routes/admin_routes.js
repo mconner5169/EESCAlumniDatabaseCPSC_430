@@ -196,22 +196,22 @@ router.get('/search', isLoggedIn, (req, res, next) => {
         });
     
     }else if ((degree !== '' && occu !== '') && (year !== '')){
-        Alumni.find({occupation: occu ,degreeType: degree, gradYear : year }).exec((err, result) => {
+        Alumni.find({ occupation: {'$regex': occu} ,degreeType: {'$regex': degree}, gradYear : year }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
     }else if ((degree !== '' && occu !== '') && (year === '')){
-        Alumni.find({occupation: occu , degreeType: degree }).exec((err, result) => {
+        Alumni.find({occupation: {'$regex': occu} , degreeType: {'$regex': degree} }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
     }else if ((degree !== '' && occu === '') && (year !== '')){
-        Alumni.find({degreeType: degree , gradYear: year }).exec((err, result) => {
+        Alumni.find({degreeType: {'$regex': degree} , gradYear: year }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });
     }else if ((degree === '' && occu !== '') && (year !== '')){
-        Alumni.find({occupation: occu , gradYear: year }).exec((err, result) => {
+        Alumni.find({occupation: {'$regex': occu} , gradYear: year }).exec((err, result) => {
             if (err) {return next(err);}
             res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
     });

@@ -8,5 +8,17 @@ nav.navbar.navbar-expand-lg.navbar-dark.fixed-top
                 a.nav-link(href='/admin/dashboard') Dashboard 
             li.nav-item
                 a.nav-link(href='/admin/pending') Pending
+        ul.navbar-nav.mx-auto      
+            li.nav-item
+                form(action='/admin/search' method='GET')
+                            input(type='search' id="searchname" name='occupation' aria-label='search' placeholder="Search Occupation")
+                            input(type='search' id="searchname1" name='degreetype' aria-label='search' placeholder="Search Degree Type")
+                            input(type='search' id="searchname1" name='gradyear' aria-label='search' placeholder="Search Grad Year")
+                            button(type='submit') Search
+        ul.navbar-nav.ml-auto
             li.nav-item
                 a.nav-link(href='/admin/logout') Logout
+            li.nav-item
+                a.nav-link(href='/admin/change') Change Password
+        
+                         

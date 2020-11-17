@@ -3,7 +3,8 @@ document.querySelector('#submit').addEventListener('click', renderAlumni)
 function renderAlumni() {
     let url = '/api/alumniByEmail/' + document.querySelector('#alumni_id').value;
     GET_alumni_by_email(url, (alumni) => {
-        console.log(alumni)
+        document.querySelector('#container').style.width = '50rem';
+        document.querySelector('#container').style.margin = 'auto';
     })
 }
 

@@ -31,11 +31,15 @@ router.get('/alumni/:id', (req, res, next) => {
     });
 })
 
+<<<<<<< HEAD
 router.get('/alumniByEmail/:email', (req, res, next) => {
     Alumni.findOne({'email': req.params.email}).exec((err, result) => {
         if (err) {res.status(500);}
         res.status(200).send(result);
     })
 })
+=======
+
+>>>>>>> 58f42d6b0ac4c5e1e3059ea8822fc5aeeb4d0ce7
 
 module.exports = router;

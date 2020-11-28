@@ -14,13 +14,13 @@ html(lang='en')
                 table.table.table-hover
                     thead
                         tr
-                            th.text-truncate(scope='col') First Name
-                            th.text-truncate(scope='col') Last Name
-                            th.text-truncate(scope='col') Grad Year
-                            th.text-truncate(scope='col') Degree Type
-                            th.text-truncate(scope='col') Occupation
-                            th.text-truncate(scope='col') Email
-                            th.text-truncate(scope='col') Email List
+                            th.text-truncate(scope='col', data-reverse='true', data-id='firstName') First Name
+                            th.text-truncate(scope='col', data-reverse='true', data-id='lastName') Last Name
+                            th.text-truncate(scope='col', data-reverse='true', data-id='gradYear') Grad Year
+                            th.text-truncate(scope='col', data-reverse='true', data-id='degreeType') Degree Type
+                            th.text-truncate(scope='col', data-reverse='true', data-id='occupation') Occupation
+                            th.text-truncate(scope='col', data-reverse='true', data-id='email') Email
+                            th.text-truncate(scope='col', data-reverse='true', data-id='emailList') Email List
                             th.hidden Edit
                             th.hidden Delete
                     tbody

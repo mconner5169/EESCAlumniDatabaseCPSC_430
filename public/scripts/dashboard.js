@@ -1,6 +1,20 @@
 
 // EVENT LISTENERS
 
+// Table Header Listeners for sorting the table
+const table = document.querySelector('table');
+table.querySelectorAll('th').forEach((element) => {
+        element.addEventListener('click', function(event) {
+            const isReverse = (this.dataset.reverse == 'true');
+            const sortParam = (this.dataset.id);
+            this.dataset.reverse = !isReverse;
+            console.log(isReverse)
+            console.log(sortParam)
+            if (isReverse) renderTable(sortParam);
+            else renderTable(sortParam);
+        })
+    })
+
 //  tbody event listener for displaying update and delete buttons
 document.querySelector('tbody').addEventListener('mouseover', buttonVisibility);
 
@@ -10,6 +24,7 @@ document.querySelector('table').addEventListener('mouseleave', (event) => {
         button.style.visibility = 'hidden';
     });
 });
+
 
 // from event listener for dynamically setting form POST request url 
 document.querySelector('.alumni_form').addEventListener('submit', (event) => {
@@ -143,9 +158,10 @@ function resetForm() {
 
 
 // Renders table with updated database
-function renderTable() {
+function renderTable(sortParam) {
     GET_alumni_entries((alumnis) => {
-        alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        alumnis.sort(function(a, b) {let textA = a.sortParam.toUpperCase(); let textB = b.sortParam.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+
         let tbody = document.querySelector('tbody');
         let clone = tbody.cloneNode(false);
         tbody.parentNode.replaceChild(clone, tbody);

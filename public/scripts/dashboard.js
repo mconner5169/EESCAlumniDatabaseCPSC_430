@@ -1,17 +1,17 @@
 
 // EVENT LISTENERS
 
-// Table Header Listeners for sorting the table
+// Table Header Listener for sorting the table
 const table = document.querySelector('table');
 table.querySelectorAll('th').forEach((element) => {
         element.addEventListener('click', function(event) {
             const isReverse = (this.dataset.reverse == 'true');
-            const sortParam = (this.dataset.id);
+            const sortParam = this.dataset.id;
             this.dataset.reverse = !isReverse;
             console.log(isReverse)
             console.log(sortParam)
-            if (isReverse) renderTable(sortParam);
-            else renderTable(sortParam);
+            if (isReverse) SortRenderTable(sortParam);
+            else ReverseRenderTable(sortParam);
         })
     })
 
@@ -156,11 +156,74 @@ function resetForm() {
     document.querySelector('#submit').setAttribute('style', 'display: inline-block');
 }
 
+// Renders table by sorting columns - ascending
+function SortRenderTable(sortParam) {
+    let sort;
+    GET_alumni_entries((alumnis) => {
+        if (sortParam == 'First Name') {
+            sort = firstName;
+        }
+        else if (sortParam == 'Last Name') {
+            sort = lastName;
+        }
+        else if (sortParam == 'Degree Type') {
+            sort = degreeType;
+        }
+        else if (sortParam == 'Occupation') {
+            sort = occupation;
+        }
+        else if (sortParam == 'Email') {
+            sort = email;
+        }
+        else if (sortParam == 'Email List') {
+            sort = emailList;
+        }
+        else {
+            sort = sortParam;
+        }
+        console.log(sort);
+        alumnis.sort(function(a, b) {let textA = a.sort; let textB = b.sort; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        renderTable();
+
+        addDeleteEventListeners();
+    })
+}
+
+// Renders table by sorting columns - descending
+function ReverseRenderTable(sortParam) {
+    GET_alumni_entries((alumnis) => {
+        if (sortParam == 'First Name') {
+            let sort = firstName;
+        }
+        else if (sortParam == 'Last Name') {
+            let sort = lastName;
+        }
+        else if (sortParam == 'Degree Type') {
+            let sort = degreeType;
+        }
+        else if (sortParam == 'Occupation') {
+            let sort = occupation;
+        }
+        else if (sortParam == 'Email') {
+            let sort = email;
+        }
+        else if (sortParam == 'Email List') {
+            let sort = emailList;
+        }
+        else {
+            let sort = sortParam;
+        }
+        alumnis.sort(function(a, b) {let textA = a.sort; let textB = b.sort; return (textA < textB) ? 1 : (textA > textB) ? -1 : 0;});
+        renderTable();
+
+        addDeleteEventListeners();
+    })
+}
 
 // Renders table with updated database
-function renderTable(sortParam) {
+function renderTable() {
     GET_alumni_entries((alumnis) => {
-        alumnis.sort(function(a, b) {let textA = a.sortParam.toUpperCase(); let textB = b.sortParam.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        //alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
 
         let tbody = document.querySelector('tbody');
         let clone = tbody.cloneNode(false);
@@ -191,8 +254,6 @@ function renderTable(sortParam) {
         addDeleteEventListeners();
     })
 }
-
-
 
 // AJAX CALLS
 

@@ -110,6 +110,7 @@ router.post('/:id/update', isLoggedIn,  [
     body('description').trim().optional({ checkFalsy: true }).escape(),
 
     (req, res, next) => {
+
         // collect any errors
         const errors = validationResult(req);
 
@@ -143,14 +144,11 @@ router.post('/:id/update', isLoggedIn,  [
 ]);
 
 router.post('/:id/approve', isLoggedIn, (req, res, next) => {
-    Alumni.findById(req.params.id).exec((err, result) => {
-        if (err) {res.sendStatus(500)}
-        Alumni.findByIdAndUpdate(req.params.id, {'status': 'approved'}, (err, result) => {
-            if (err) {return next(err);}
-            res.sendStatus(200);
-        })
+    Alumni.findByIdAndUpdate(req.params.id, {'status': 'approved'}, (err, result) => {
+        if (err) {return next(err);}
+        res.sendStatus(200);
     })
-})  
+});
 
 router.delete('/:id/delete', isLoggedIn, (req, res, next) => {
     Alumni.findByIdAndRemove(req.params.id, function deleteAlumni(err) {
@@ -178,45 +176,10 @@ router.get('/search', isLoggedIn, (req, res, next) => {
     occu = req.query.occupation;
     degree = req.query.degreetype;
     year = req.query.gradyear;
-    if((degree === '' && occu !== '') && (year === '')) {
-    Alumni.find({occupation: {'$regex': occu}}).exec((err, result) => {
+    Alumni.find({ occupation: {'$regex': occu} ,degreeType: {'$regex': degree}, gradYear : {$gte: year || 0, $lte: year || 9999}}).exec((err, results) => {
         if (err) {return next(err);}
-        res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});     
+        res.render('admin_dashboard.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: results}); 
     });
-    }else if ((degree !== '' && occu === '') && (year === '')) {
-        Alumni.find({degreeType: {'$regex': degree}}).exec((err, result) => {
-            if (err) {return next(err);}
-            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-        });
-
-    }else if ((degree === '' && occu === '') && (year !== '')) {
-        Alumni.find({gradYear : year }).exec((err, result) => {
-            if (err) {return next(err);}
-            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-        });
-    
-    }else if ((degree !== '' && occu !== '') && (year !== '')){
-        Alumni.find({ occupation: {'$regex': occu} ,degreeType: {'$regex': degree}, gradYear : year }).exec((err, result) => {
-            if (err) {return next(err);}
-            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-    });
-    }else if ((degree !== '' && occu !== '') && (year === '')){
-        Alumni.find({occupation: {'$regex': occu} , degreeType: {'$regex': degree} }).exec((err, result) => {
-            if (err) {return next(err);}
-            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-    });
-    }else if ((degree !== '' && occu === '') && (year !== '')){
-        Alumni.find({degreeType: {'$regex': degree} , gradYear: year }).exec((err, result) => {
-            if (err) {return next(err);}
-            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-    });
-    }else if ((degree === '' && occu !== '') && (year !== '')){
-        Alumni.find({occupation: {'$regex': occu} , gradYear: year }).exec((err, result) => {
-            if (err) {return next(err);}
-            res.render('search.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: result});       
-    });
-    
-}
 });
 
 

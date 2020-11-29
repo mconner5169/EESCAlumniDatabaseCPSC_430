@@ -1,3 +1,5 @@
+// Global Variables
+let isReverse;
 
 // EVENT LISTENERS
 
@@ -7,11 +9,32 @@ table.querySelectorAll('th').forEach((element) => {
         element.addEventListener('click', function(event) {
             const isReverse = (this.dataset.reverse == 'true');
             const sortParam = this.dataset.id;
-            this.dataset.reverse = !isReverse;
-            console.log(isReverse)
-            console.log(sortParam)
-            if (isReverse) SortRenderTable(sortParam);
-            else ReverseRenderTable(sortParam);
+            this.dataset.reverse = !isReverse; // sets to false after clicking header
+            console.log(isReverse) //debugging statement
+            console.log(sortParam) //debugging statement
+            
+            //Sorts table based on sortParam
+            if (sortParam == 'First Name') {
+                renderTablefirstName(isReverse);
+            }
+            if (sortParam == 'Last Name') {
+                renderTablelastName(isReverse);
+            }
+            if (sortParam == 'Grad Year') {
+                renderTablegradYear(isReverse);
+            }
+            if (sortParam == 'Degree Type') {
+                renderTabledegreeType(isReverse);
+            }
+            if (sortParam == 'Occupation') {
+                renderTableoccupation(isReverse);
+            }
+            if (sortParam == 'Email') {
+                renderTableemail(isReverse);
+            }
+            if (sortParam == 'Email List') {
+                renderTableemailList(isReverse);
+            }
         })
     })
 
@@ -157,74 +180,373 @@ function resetForm() {
 }
 
 // Renders table by sorting columns - ascending
-function SortRenderTable(sortParam) {
-    let sort;
-    GET_alumni_entries((alumnis) => {
-        if (sortParam == 'First Name') {
-            sort = firstName;
-        }
-        else if (sortParam == 'Last Name') {
-            sort = lastName;
-        }
-        else if (sortParam == 'Degree Type') {
-            sort = degreeType;
-        }
-        else if (sortParam == 'Occupation') {
-            sort = occupation;
-        }
-        else if (sortParam == 'Email') {
-            sort = email;
-        }
-        else if (sortParam == 'Email List') {
-            sort = emailList;
-        }
-        else {
-            sort = sortParam;
-        }
-        console.log(sort);
-        alumnis.sort(function(a, b) {let textA = a.sort; let textB = b.sort; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        renderTable();
+/*function SortRenderTable(sortParam) {
 
-        addDeleteEventListeners();
-    })
+    GET_alumni_entries((alumnis) => {
+     if (sortParam == 'First Name') {
+            
+            renderTable('firstName');
+            //alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+    if (sortParam == 'Last Name') {
+            
+            renderTable('lastName');
+            //alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+    if (sortParam == 'Degree Type') {
+            
+            renderTable('degreeType');
+            //alumnis.sort(function(a, b) {let textA = a.degreeType.toUpperCase(); let textB = b.degreeType.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+       }
+    if (sortParam == 'Occupation') {
+            
+            renderTable('occupation');
+            //alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+    if (sortParam == 'Email') {
+            
+            renderTable('email');
+            //alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+    if (sortParam == 'Email List') {
+            
+            renderTable('emailList');
+            //alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        
+        }
+    if (sortParam == 'Grad Year') {
+            
+            renderTable('gradYear');
+            //alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        
+
+    });
 }
 
 // Renders table by sorting columns - descending
 function ReverseRenderTable(sortParam) {
-    GET_alumni_entries((alumnis) => {
+     
+     GET_alumni_entries((alumnis) => {
         if (sortParam == 'First Name') {
-            let sort = firstName;
+            
+            alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         }
-        else if (sortParam == 'Last Name') {
-            let sort = lastName;
+        if (sortParam == 'Last Name') {
+            
+            alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         }
-        else if (sortParam == 'Degree Type') {
-            let sort = degreeType;
+        if (sortParam == 'Degree Type') {
+            
+            alumnis.sort(function(a, b) {let textA = a.degreeType.toUpperCase(); let textB = b.degreeType.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+       }
+        if (sortParam == 'Occupation') {
+            
+            alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         }
-        else if (sortParam == 'Occupation') {
-            let sort = occupation;
+        if (sortParam == 'Email') {
+            
+            alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         }
-        else if (sortParam == 'Email') {
-            let sort = email;
+        if (sortParam == 'Email List') {
+            
+            alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        
         }
-        else if (sortParam == 'Email List') {
-            let sort = emailList;
+        if (sortParam == 'Grad Year') {
+            
+            alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
         }
-        else {
-            let sort = sortParam;
-        }
-        alumnis.sort(function(a, b) {let textA = a.sort; let textB = b.sort; return (textA < textB) ? 1 : (textA > textB) ? -1 : 0;});
+        
         renderTable();
+
+        });
+}*/
+
+
+// Renders table with updated database
+function renderTable() {
+
+    GET_alumni_entries((alumnis) => {
+
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
 
         addDeleteEventListeners();
     })
 }
 
-// Renders table with updated database
-function renderTable() {
-    GET_alumni_entries((alumnis) => {
-        //alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+function renderTablefirstName(isReverse) {
 
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        }
+
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        addDeleteEventListeners();
+    })
+}
+
+function renderTablelastName(isReverse) {
+
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        }
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        addDeleteEventListeners();
+    })
+}
+
+function renderTablegradYear(isReverse) {
+
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        }
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        addDeleteEventListeners();
+    })
+}
+
+function renderTabledegreeType(isReverse) {
+
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.degreeType; let textB = b.degreeType; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.degreeType; let textB = b.degreeType; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        }
+
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        addDeleteEventListeners();
+    })
+}
+
+function renderTableoccupation(isReverse) {
+
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        }
+
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        addDeleteEventListeners();
+    })
+}
+
+function renderTableemail(isReverse) {
+
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
+        }
+
+        let tbody = document.querySelector('tbody');
+        let clone = tbody.cloneNode(false);
+        tbody.parentNode.replaceChild(clone, tbody);
+        tbody = clone;
+        tbody.addEventListener('mouseover', buttonVisibility);
+        for (i in alumnis) {
+            let tr = document.createElement('tr'); 
+            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
+            //So set it to each col so can give the idea the 'entire' row is clickable 
+            // tr.setAttribute('data-toggle', 'modal');
+            // tr.setAttribute('data-target', '#form_modal');
+            // tr.setAttribute('data-type', 'View');
+            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
+            tr.innerHTML = `
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
+            <td class='px-0'><button class='btn btn-secondary btn-sm mr-3' data-toggle='modal' data-target='#form_modal' data-type='Update' alumni_id='${alumnis[i]._id}'>Update</button></td>
+            <td class='px-0'><button class='btn btn-danger btn-sm delete_btn' alumni_id='${alumnis[i]._id}'>Delete</button></td>`;
+            tbody.appendChild(tr);
+        }
+
+        addDeleteEventListeners();
+    })
+}
+
+// doesn't sort - fix this
+function renderTableemailList(isReverse) {
+
+    GET_alumni_entries((alumnis) => {
+        if (!isReverse) {
+            alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA === textB) ? 0 : textA ? -1 : 1});
+        }
+        else {
+            alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA === textB) ? 0 : textA ? 1 : -1});
+        }
         let tbody = document.querySelector('tbody');
         let clone = tbody.cloneNode(false);
         tbody.parentNode.replaceChild(clone, tbody);

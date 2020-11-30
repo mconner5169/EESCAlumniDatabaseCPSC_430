@@ -40,6 +40,9 @@ button:hover {
   margin: 24px 0 12px 0;
 }
 .container {
-  padding: 16px;
- 
+  background-image: url(adminumwlogo.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.6px;
+  padding: 90px;
 }

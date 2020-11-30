@@ -8,6 +8,7 @@ td button, .hidden {
 
 th {
     border-top: transparent !important;
+    cursor: pointer;
 }
 
 .buffer {

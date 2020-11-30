@@ -1,36 +1,46 @@
 let express = require('express');
 let router = express.Router();
 let path = require('path');
+const bodyParser = require("body-parser");
 
 let { body, validationResult } = require('express-validator');
 let Alumni = require('../models/alumni');
 
+router.use(bodyParser.urlencoded({extended : true}));
 
 // Returns all approved alumni entries
 router.get('/alumnis', (req, res, next) => {
-    Alumni.find({'status': 'approved'}).exec(function(err, results) {
+    let query = {};
+    for(let key in req.query){ 
+        if (Number.isNaN(parseInt(req.query[key]))) {
+            req.query[key] !== "" ? query[key] = {$regex: req.query[key]} : null;
+        } else {
+            req.query[key] !== "" ? query[key] = {$eq: req.query[key]} : null;
+        }
+    }
+
+    Alumni.find(query, (err, results) => {
         if (err) {return next(err);}
         res.setHeader('content-type', 'application/json')
-        res.json(results);
-    });
+        res.status(200).json(results)
+    })
 });
 
-// Returns all pending alumni entries
-router.get('/alumnis/pending', (req, res, next) => {
-    Alumni.find({'status': 'pending'}).exec(function(err, results) {
-        if (err) {return next(err);}
-        res.send(results);
-    });
-});
-
-// Returns alumni entry 
-router.get('/alumni/:id', (req, res, next) => {
-    Alumni.findById(req.params.id).exec((err, result) => {
-        if (err) {return next(err);}
+router.get('/alumniByEmail/:email', (req, res, next) => {
+    Alumni.findOne({'email': req.params.email}).exec((err, result) => {
+        if (err) {res.status(500);}
         res.status(200).send(result);
-    });
+    })
 })
 
-
+router.get('/search', (req, res, next) => {
+    occupationpation = req.query.occupationpation;
+    degreeType = req.query.degreetype;
+    gradYear = req.query.gradyear;
+    Alumni.find({ 'occupation': {'$regex': occupation}, 'degreeType': {'$regex': degreeType}, 'gradYear' : {$gte: gradYear || 0, $lte: gradYear || 9999}}).exec((err, results) => {
+        if (err) {return next(err);}
+        res.status(200).send(results)
+    });
+});
 
 module.exports = router;

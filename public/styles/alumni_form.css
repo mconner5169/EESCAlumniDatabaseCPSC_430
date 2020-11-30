@@ -32,10 +32,7 @@
     div.transparent {
         background-color: darkgray;
         background-color: rgba(0,0,0,0.5);
-        background-size: cover;
-        background-repeat: repeat;
-        background-attachment: fixed;
-        padding-bottom: 200px;
+        padding-bottom: 5rem;
     }
 
     fieldset {

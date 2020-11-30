@@ -51,5 +51,8 @@ router.post('/form', [
     }
 ]); 
 
+router.get('/status', (req, res, next) => {
+    res.sendFile(path.join(__dirname + '/../public/alumni_status.html'));
+});
 
 module.exports = router;

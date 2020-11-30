@@ -11,8 +11,8 @@ table.querySelectorAll('th').forEach((element) => {
             const isReverse = (this.dataset.reverse == 'true');
             const sortParam = this.dataset.id;
             this.dataset.reverse = !isReverse;
-            //console.log(isReverse) //debugging statement
-            //console.log(sortParam) //debugging statement
+            console.log(isReverse) //debugging statement
+            console.log(sortParam) //debugging statement
             
             //Sorts table based on sortParam
             if (sortParam == 'First Name') {
@@ -234,9 +234,10 @@ function resetForm() {
 // Renders table with updated database
 function renderTable() {
 
+    //GET_alumni_entries((alumnis) => {
     GET_alumni_entries(alumniParams ? alumniParams : '', (alumnis) => {
         alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        
+
 
         let tbody = document.querySelector('tbody');
         let clone = tbody.cloneNode(false);
@@ -264,7 +265,7 @@ function renderTable() {
 
 function renderTablefirstName(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -298,7 +299,7 @@ function renderTablefirstName(isReverse) {
 
 function renderTablelastName(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -331,7 +332,7 @@ function renderTablelastName(isReverse) {
 
 function renderTablegradYear(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -364,7 +365,7 @@ function renderTablegradYear(isReverse) {
 
 function renderTabledegreeType(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.degreeType; let textB = b.degreeType; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -398,7 +399,7 @@ function renderTabledegreeType(isReverse) {
 
 function renderTableoccupation(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -432,7 +433,7 @@ function renderTableoccupation(isReverse) {
 
 function renderTableemail(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -467,7 +468,7 @@ function renderTableemail(isReverse) {
 
 function renderTableemailList(isReverse) {
 
-    GET_alumni_entries((alumnis) => {
+    GET_alumni_sortentries((alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA === textB) ? 0 : textA ? -1 : 1});
         }

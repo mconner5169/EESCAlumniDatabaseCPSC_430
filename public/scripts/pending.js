@@ -9,9 +9,9 @@ table.querySelectorAll('th').forEach((element) => {
         element.addEventListener('click', function(event) {
             const isReverse = (this.dataset.reverse == 'true');
             const sortParam = this.dataset.id;
-            this.dataset.reverse = !isReverse; // sets to false after clicking header
-            console.log(isReverse) //debugging statement
-            console.log(sortParam) //debugging statement
+            this.dataset.reverse = !isReverse;
+            //console.log(isReverse) //debugging statement
+            //console.log(sortParam) //debugging statement
             
             //Sorts table based on sortParam
             if (sortParam == 'First Name') {

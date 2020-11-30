@@ -9,9 +9,9 @@ table.querySelectorAll('th').forEach((element) => {
         element.addEventListener('click', function(event) {
             const isReverse = (this.dataset.reverse == 'true');
             const sortParam = this.dataset.id;
-            this.dataset.reverse = !isReverse; // sets to false after clicking header
-            console.log(isReverse) //debugging statement
-            console.log(sortParam) //debugging statement
+            this.dataset.reverse = !isReverse;
+            //console.log(isReverse) //debugging statement
+            //console.log(sortParam) //debugging statement
             
             //Sorts table based on sortParam
             if (sortParam == 'First Name') {
@@ -179,90 +179,6 @@ function resetForm() {
     document.querySelector('#submit').setAttribute('style', 'display: inline-block');
 }
 
-// Renders table by sorting columns - ascending
-/*function SortRenderTable(sortParam) {
-
-    GET_alumni_entries((alumnis) => {
-     if (sortParam == 'First Name') {
-            
-            renderTable('firstName');
-            //alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        }
-    if (sortParam == 'Last Name') {
-            
-            renderTable('lastName');
-            //alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        }
-    if (sortParam == 'Degree Type') {
-            
-            renderTable('degreeType');
-            //alumnis.sort(function(a, b) {let textA = a.degreeType.toUpperCase(); let textB = b.degreeType.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-       }
-    if (sortParam == 'Occupation') {
-            
-            renderTable('occupation');
-            //alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        }
-    if (sortParam == 'Email') {
-            
-            renderTable('email');
-            //alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        }
-    if (sortParam == 'Email List') {
-            
-            renderTable('emailList');
-            //alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        
-        }
-    if (sortParam == 'Grad Year') {
-            
-            renderTable('gradYear');
-            //alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
-        }
-        
-
-    });
-}
-
-// Renders table by sorting columns - descending
-function ReverseRenderTable(sortParam) {
-     
-     GET_alumni_entries((alumnis) => {
-        if (sortParam == 'First Name') {
-            
-            alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-        }
-        if (sortParam == 'Last Name') {
-            
-            alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-        }
-        if (sortParam == 'Degree Type') {
-            
-            alumnis.sort(function(a, b) {let textA = a.degreeType.toUpperCase(); let textB = b.degreeType.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-       }
-        if (sortParam == 'Occupation') {
-            
-            alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-        }
-        if (sortParam == 'Email') {
-            
-            alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-        }
-        if (sortParam == 'Email List') {
-            
-            alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-        
-        }
-        if (sortParam == 'Grad Year') {
-            
-            alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;});
-        }
-        
-        renderTable();
-
-        });
-}*/
-
 
 // Renders table with updated database
 function renderTable() {
@@ -276,12 +192,6 @@ function renderTable() {
         tbody.addEventListener('mouseover', buttonVisibility);
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
-            //Orignally wanted to set toggle on tr but delete button triggered the modal to appear 
-            //So set it to each col so can give the idea the 'entire' row is clickable 
-            // tr.setAttribute('data-toggle', 'modal');
-            // tr.setAttribute('data-target', '#form_modal');
-            // tr.setAttribute('data-type', 'View');
-            // tr.setAttribute('alumni_id', `${alumnis[i]._id}`);
             tr.innerHTML = `
             <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
             <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
@@ -537,7 +447,7 @@ function renderTableemail(isReverse) {
     })
 }
 
-// doesn't sort - fix this
+
 function renderTableemailList(isReverse) {
 
     GET_alumni_entries((alumnis) => {

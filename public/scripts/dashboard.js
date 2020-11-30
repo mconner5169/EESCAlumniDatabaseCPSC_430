@@ -2,6 +2,7 @@
 let alumniParams = 'status=approved';
 let isReverse;
 
+
 // EVENT LISTENERS
 
 // Table Header Listener for sorting the table
@@ -234,7 +235,6 @@ function resetForm() {
 // Renders table with updated database
 function renderTable() {
 
-    //GET_alumni_entries((alumnis) => {
     GET_alumni_entries(alumniParams ? alumniParams : '', (alumnis) => {
         alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
 

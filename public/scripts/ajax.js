@@ -117,6 +117,7 @@ function GET_pending_alumni_sortentries(params, callback) {
         console.log('XMLHTTPRequest error');
     }
 }
+
 // Returns a singel alumni entry
 function GET_alumni_by_id(id, callback) {
 

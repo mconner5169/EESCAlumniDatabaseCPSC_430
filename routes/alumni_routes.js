@@ -55,4 +55,8 @@ router.get('/status', (req, res, next) => {
     res.sendFile(path.join(__dirname + '/../public/alumni_status.html'));
 });
 
+router.get('/contact', (req, res, next) => {
+    res.sendFile(path.join(__dirname + '/../public/contact_admin.html'));
+});
+
 module.exports = router;

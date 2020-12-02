@@ -27,17 +27,61 @@ html
                         - alumni_list.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
                         each alumni in alumni_list
                             tr
-                                td.text-truncate #{alumni.firstName}
-                                td.text-truncate #{alumni.lastName}
-                                td.text-truncate #{alumni.gradYear}
-                                td.text-truncate #{alumni.degreeType}
-                                td.text-truncate #{alumni.occupation}
-                                td.text-truncate #{alumni.email}
-                                td #{alumni.emailList}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.firstName}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.lastName}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.gradYear}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.degreeType}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.occupation}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.email}
+                                td.text-truncate(data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id = alumni._id ) #{alumni.emailList}
                                 td.px-0
                                     button.btn.btn-success.btn-sm.mr-3.accept_btn(alumni_id = alumni._id) Accept
                                 td.px-0
                                     button.btn.btn-danger.btn-sm.reject_btn(alumni_id = alumni._id) Reject
+
+        // Form Modal
+        div#form_modal.modal.fade(tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true' style="display='block' data-keyboard='false' data-backdrop='static'")
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        h5.modal-title
+                        button.close(type='button' data-dismiss='modal' aria-label='Close' onclick='resetForm()')
+                        span(aria-hidden='true') &times;
+                    div.modal-body
+                        form.alumni_form
+                            div#errorList.text-danger
+                            div.form-row
+                                div.col
+                                    div.form-group
+                                        label(for='firstName') First Name
+                                        input#firstName.form-control(type='text' name='firstName')
+                                div.col
+                                    div.form-group
+                                        label(for='lastName') Last Name
+                                        input#lastName.form-control(type='text' name='lastName')
+                            div.form-group
+                                label(for='email') Email
+                                input#email.form-control(type='email' name='email')
+                            div.form-row
+                                div.col
+                                    div.form-group
+                                        label(for='gradYear') Graduation Year
+                                        input#gradYear.form-control(type='number' name='gradYear')
+                                div.col
+                                    div.form-group
+                                        label(for='degreeType') Degree
+                                        input#degreeType.form-control(type='text' name='degreeType')
+                            div.form-group
+                                label(for='occupation') Occupation
+                                input#occupation.form-control(type='text' name='occupation')
+                            div.form-group
+                                label(for='description') Description
+                                textarea#description.form-control(type='text' name='description')
+                            div.form-group.form-check
+                                input#emailList.form-check-input(type='checkbox')
+                                label.form-check-label(for='emailList') Would you like to receive emails from UMW?
+                            button.btn.btn-secondary.mr-2#close(type='button' data-dismiss='modal' onclick='resetForm()') Close
+                            button.btn.btn-primary#submit(type='submit') Submit
 
         script(src='/scripts/ajax.js')
         script(src='/scripts/pending.js')

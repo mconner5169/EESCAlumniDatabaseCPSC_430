@@ -49,6 +49,15 @@ document.querySelector('table').addEventListener('mouseleave', (event) => {
     });
 });
 
+//search bar
+document.querySelector('#search').addEventListener('click', (event) => {
+    let gradYear = document.querySelector('#searchGradYear').value;
+    let degreeType = document.querySelector('#searchDegreeType').value;
+    let occupation = document.querySelector('#searchOccupation').value;
+    alumniParams = (gradYear != '' ? 'gradYear=' + gradYear : ''  ) + (degreeType != '' ? '&degreeType=' + degreeType : '') + (occupation != '' ? '&occupation=' + occupation : '') + '&status=approved';
+    renderTable();
+}) 
+
 function buttonVisibility(event) {
     document.querySelectorAll('tbody button').forEach((button) => {
         button.style.visibility = 'hidden';
@@ -77,6 +86,8 @@ function addButtonEventListeners() {
             POST_approve_alumni(id, (status) => {
                 if (status == 200) {
                     renderTable();
+                    resetForm();
+                    $('#form_modal').modal('hide');
                 }
             });
         });
@@ -86,6 +97,8 @@ function addButtonEventListeners() {
             DELETE_alumni(btn.getAttribute('alumni_id'), (status) => {
                 if (status == 200) {
                     renderTable();
+                    resetForm();
+                    $('#form_modal').modal('hide');
                 }
             })
         });
@@ -110,13 +123,13 @@ function renderTable() {
         for (i in alumnis) {
             let tr = document.createElement('tr');
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -144,13 +157,13 @@ function renderTablefirstName(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -177,13 +190,13 @@ function renderTablelastName(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -210,13 +223,13 @@ function renderTablegradYear(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -244,13 +257,13 @@ function renderTabledegreeType(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -278,13 +291,13 @@ function renderTableoccupation(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -312,13 +325,13 @@ function renderTableemail(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -346,13 +359,13 @@ function renderTableemailList(isReverse) {
         for (i in alumnis) {
             let tr = document.createElement('tr'); 
             tr.innerHTML = `
-            <td class='text-truncate'>${alumnis[i].firstName}</td>
-            <td class='text-truncate'>${alumnis[i].lastName}</td>
-            <td class='text-truncate'>${alumnis[i].gradYear}</td>
-            <td class='text-truncate'>${alumnis[i].degreeType}</td>
-            <td class='text-truncate'>${alumnis[i].occupation}</td>
-            <td class='text-truncate'>${alumnis[i].email}</td>
-            <td>${alumnis[i].emailList}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].firstName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].lastName}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].gradYear}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].degreeType}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].occupation}</td>
+            <td class='text-truncate' data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].email}</td>
+            <td data-toggle='modal' data-target='#form_modal' data-type='View' alumni_id='${alumnis[i]._id}'>${alumnis[i].emailList}</td>
             <td class='px-0'><button class='btn btn-success btn-sm mr-3 accept_btn' alumni_id='${alumnis[i]._id}'>Accept</button></td>
             <td class='px-0'><button class='btn btn-danger btn-sm reject_btn' alumni_id='${alumnis[i]._id}'>Reject</button></td>`;
             tbody.appendChild(tr);
@@ -361,6 +374,66 @@ function renderTableemailList(isReverse) {
         addButtonEventListeners();
     })
 }
+
+//Modal Handler
+
+$('#form_modal').on('show.bs.modal', function (event) {
+    let errorList = document.querySelector('#errorList');
+    errorList.innerHTML = '';
+    let button = $(event.relatedTarget); 
+    let crud_type = button.data('type'); 
+    let modal = $(this);
+    modal.find('.modal-title').text(crud_type + ' Alumni Entry');
+ 
+    if (crud_type == 'View') {
+        GET_alumni_by_id(button[0].getAttribute('alumni_id'), (alumni) => {
+            document.querySelector('#firstName').value = alumni.firstName;
+            document.querySelector('#firstName').setAttribute('readonly', true);
+            document.querySelector('#lastName').value = alumni.lastName;
+            document.querySelector('#lastName').setAttribute('readonly', true);
+            document.querySelector('#email').value = alumni.email;
+            document.querySelector('#email').setAttribute('readonly', true);
+            document.querySelector('#gradYear').value = alumni.gradYear;
+            document.querySelector('#gradYear').setAttribute('readonly', true);
+            document.querySelector('#degreeType').value = alumni.degreeType;
+            document.querySelector('#degreeType').setAttribute('readonly', true);
+            document.querySelector('#occupation').value = alumni.occupation;
+            document.querySelector('#occupation').setAttribute('readonly', true);
+            document.querySelector('#description').value = alumni.description === undefined ? '' : alumni.description;
+            document.querySelector('#description').setAttribute('readonly', true);
+            document.querySelector('#emailList').checked = alumni.emailList;
+            document.querySelector('#emailList').setAttribute('disabled', true);
+            document.querySelector('form').id = button[0].getAttribute('alumni_id');
+            document.querySelector('#submit').setAttribute('style', 'display: none;');
+        });
+    } 
+});
+
+$('#form_modal').on('hide.bs.modal', function (event) {
+    resetForm();
+}); 
+
+function resetForm() {
+    document.querySelector('#firstName').value = '';
+    document.querySelector('#lastName').value = '';
+    document.querySelector('#gradYear').value = '';
+    document.querySelector('#degreeType').value = '';
+    document.querySelector('#occupation').value = '';
+    document.querySelector('#email').value = '';
+    document.querySelector('#emailList').value = '';
+    document.querySelector('#description').value = '';
+    document.querySelector('#firstName').removeAttribute('readonly');
+    document.querySelector('#lastName').removeAttribute('readonly');
+    document.querySelector('#gradYear').removeAttribute('readonly');
+    document.querySelector('#degreeType').removeAttribute('readonly');
+    document.querySelector('#occupation').removeAttribute('readonly');
+    document.querySelector('#email').removeAttribute('readonly');
+    document.querySelector('#emailList').removeAttribute('disabled');
+    document.querySelector('#description').removeAttribute('readonly');
+    document.querySelector('#submit').setAttribute('style', 'display: inline-block');
+}
+
+
 // AJAX CALLS
 
 // function updateHandler(url){

@@ -49,12 +49,11 @@ document.querySelector('table').addEventListener('mouseleave', (event) => {
     });
 });
 
-//search bar
 document.querySelector('#search').addEventListener('click', (event) => {
     let gradYear = document.querySelector('#searchGradYear').value;
     let degreeType = document.querySelector('#searchDegreeType').value;
     let occupation = document.querySelector('#searchOccupation').value;
-    alumniParams = (gradYear != '' ? 'gradYear=' + gradYear : ''  ) + (degreeType != '' ? '&degreeType=' + degreeType : '') + (occupation != '' ? '&occupation=' + occupation : '') + '&status=approved';
+    alumniParams = (gradYear != '' ? 'gradYear=' + gradYear : ''  ) + (degreeType != '' ? '&degreeType=' + degreeType : '') + (occupation != '' ? '&occupation=' + occupation : '') + '&status=pending';
     renderTable();
 }) 
 
@@ -78,6 +77,8 @@ function buttonVisibility(event) {
         });
     }
 }
+
+
 
 function addButtonEventListeners() {
     document.querySelectorAll('.accept_btn').forEach((btn) => { 
@@ -113,7 +114,7 @@ addButtonEventListeners();
 
 // Renders table with updated database
 function renderTable() {
-    GET_alumni_entries('status=pending', (alumnis) => {
+    GET_alumni_entries(alumniParams ? alumniParams : '', (alumnis) => {
         alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         let tbody = document.querySelector('tbody');
         let clone = tbody.cloneNode(false);

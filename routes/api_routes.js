@@ -33,14 +33,6 @@ router.get('/alumniByEmail/:email', (req, res, next) => {
     })
 })
 
-router.get('/search', (req, res, next) => {
-    occupationpation = req.query.occupationpation;
-    degreeType = req.query.degreetype;
-    gradYear = req.query.gradyear;
-    Alumni.find({ 'occupation': {'$regex': occupation}, 'degreeType': {'$regex': degreeType}, 'gradYear' : {$gte: gradYear || 0, $lte: gradYear || 9999}}).exec((err, results) => {
-        if (err) {return next(err);}
-        res.status(200).send(results)
-    });
-});
+
 
 module.exports = router;

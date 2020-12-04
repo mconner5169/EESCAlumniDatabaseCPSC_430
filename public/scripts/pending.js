@@ -1,5 +1,6 @@
 // Global Variables
 let isReverse;
+let alumniParams = 'status=pending';
 
 // EVENT LISTENERS
 
@@ -71,10 +72,23 @@ function buttonVisibility(event) {
 
 function addButtonEventListeners() {
     document.querySelectorAll('.accept_btn').forEach((btn) => { 
-        btn.addEventListener('click', POST_approve_alumni);
+        let id = btn.getAttribute('alumni_id');
+        btn.addEventListener('click', () => {
+            POST_approve_alumni(id, (status) => {
+                if (status == 200) {
+                    renderTable();
+                }
+            });
+        });
     })
     document.querySelectorAll('.reject_btn').forEach((btn) => { 
-        btn.addEventListener('click', DELETE_alumni);
+        btn.addEventListener('click', () => {
+            DELETE_alumni(btn.getAttribute('alumni_id'), (status) => {
+                if (status == 200) {
+                    renderTable();
+                }
+            })
+        });
     })
 }
 
@@ -86,7 +100,7 @@ addButtonEventListeners();
 
 // Renders table with updated database
 function renderTable() {
-    GET_pending_alumni_entries((alumnis) => {
+    GET_alumni_entries('status=pending', (alumnis) => {
         alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         let tbody = document.querySelector('tbody');
         let clone = tbody.cloneNode(false);
@@ -114,7 +128,7 @@ function renderTable() {
 
 function renderTablefirstName(isReverse) {
 
-    GET_pending_alumni_entries((alumnis) => {
+    GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -148,7 +162,7 @@ function renderTablefirstName(isReverse) {
 
 function renderTablelastName(isReverse) {
 
-    GET_pending_alumni_entries((alumnis) => {
+    GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -181,7 +195,7 @@ function renderTablelastName(isReverse) {
 
 function renderTablegradYear(isReverse) {
 
-    GET_pending_alumni_entries((alumnis) => {
+    GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -214,7 +228,7 @@ function renderTablegradYear(isReverse) {
 
 function renderTabledegreeType(isReverse) {
 
-    GET_pending_alumni_entries((alumnis) => {
+    GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.degreeType; let textB = b.degreeType; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -248,7 +262,7 @@ function renderTabledegreeType(isReverse) {
 
 function renderTableoccupation(isReverse) {
 
-   GET_pending_alumni_entries((alumnis) => {
+   GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -282,7 +296,7 @@ function renderTableoccupation(isReverse) {
 
 function renderTableemail(isReverse) {
 
-    GET_pending_alumni_entries((alumnis) => {
+    GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -317,7 +331,7 @@ function renderTableemail(isReverse) {
 // doesn't sort - fix this
 function renderTableemailList(isReverse) {
 
-    GET_pending_alumni_entries((alumnis) => {
+    GET_pending_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA === textB) ? 0 : textA ? -1 : 1});
         }
@@ -349,96 +363,10 @@ function renderTableemailList(isReverse) {
 }
 // AJAX CALLS
 
-// Alumni form post handler using ajax
-function POST_alumni_form(url) {
+// function updateHandler(url){
+    // POST_alumni(url, null, (status) => {
+    //     console.log('all good in the neighborhood');
+    // });
+// }
 
-    // Get data from DOM
-    let firstName = document.querySelector('#firstName').value;
-    let lastName = document.querySelector('#lastName').value;
-    let gradYear = document.querySelector('#gradYear').value;
-    let degreeType = document.querySelector('#degreeType').value;
-    let occupation = document.querySelector('#occupation').value;
-    let email = document.querySelector('#email').value;
-    let emailList = document.querySelector('#emailList').checked;
-    let description = document.querySelector('#description').value;
-
-    let params = "firstName="+firstName+"&lastName="+lastName+"&gradYear="+gradYear+"&degreeType="+degreeType+"&occupation="+occupation+"&email="+email+"&emailList="+emailList+"&description="+description;
-   
-    // AJAX 
-    let xhr = new XMLHttpRequest();
-
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.send(params);
-
-    xhr.onload = function() {
-        if (xhr.status == 500) {  
-            // Error Block
-            renderFormErrors(xhr.responseText);
-        } else if (xhr.status == 200) {
-            // Success Block
-            renderTable();
-            resetForm();
-            $('#form_modal').modal('hide');
-        }
-    }
-
-    xhr.onerror = function() {
-        console.log('XMLHTTPRequest error');
-    }
-}
-
-// Alumni entries get handler using ajax
-function GET_pending_alumni_entries(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', '/api/alumnis/pending', true);
-    
-    xhr.send();
-
-    xhr.onload = function() {
-        if (callback) {callback(JSON.parse(xhr.response))}
-    }
-
-    xhr.onerror = function() {
-        console.log('XMLHTTPRequest error');
-    }
-
-}
-
-function DELETE_alumni(event) {
-    let url = '/admin/' + event.srcElement.getAttribute('alumni_id') + '/delete';
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('DELETE', url, true);
-    xhr.send();
-
-    xhr.onload = () => {
-        if (xhr.status == 200) {
-            renderTable();
-        }
-    }
-
-    xhr.onerror = () => {
-        console.log('XMLHTTMLRequest Error')
-    }
-
-
-}
-
-function POST_approve_alumni(event) {
-    let url = '/admin/' + event.srcElement.getAttribute('alumni_id') + '/approve';
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', url, true);
-    xhr.send();
-
-    xhr.onload = () => {
-        if (xhr.status == 200) {
-            renderTable();
-        }
-    }
-
-    xhr.onerror = () => {
-        console.log('XMLHTTMLRequest Error')
-    }
-}
+console.log('pending.js loaded')

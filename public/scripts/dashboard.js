@@ -92,6 +92,7 @@ document.querySelector('.alumni_form').addEventListener('submit', (event) => {
 });
 
 document.querySelector('#search').addEventListener('click', (event) => {
+    console.log("here")
     let gradYear = document.querySelector('#searchGradYear').value;
     let degreeType = document.querySelector('#searchDegreeType').value;
     let occupation = document.querySelector('#searchOccupation').value;

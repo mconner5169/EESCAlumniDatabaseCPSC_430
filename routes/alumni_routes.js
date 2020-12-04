@@ -18,6 +18,12 @@ router.post('/form', [
     body('degreeType', 'Degree Type must be specified').trim().isLength({ min: 1}).escape(),
     body('occupation', 'Occupation must be specified').trim().isLength({ min: 1}).escape(),
     body('email', 'Email must be specified').trim().isLength({ min: 1}).escape().isEmail(),
+    body('email-confirm').trim().isLength({ min: 1}).escape().isEmail().custom((value, { req }) => {
+        if (value !== req.body.email) {
+            throw new Error('Email confirmation does not match email');
+        }
+        return true;
+    }),
     body('description').trim().optional({ checkFalsy: true }).escape(),
     body('emailList'),
 

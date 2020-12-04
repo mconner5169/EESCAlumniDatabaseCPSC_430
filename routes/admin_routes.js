@@ -172,15 +172,15 @@ router.get('/pending', isLoggedIn, (req, res, next) => {
 });
   
 
-router.get('/search', isLoggedIn, (req, res, next) => {
-    occu = req.query.occupation;
-    degree = req.query.degreetype;
-    year = req.query.gradyear;
-    Alumni.find({ occupation: {'$regex': occu} ,degreeType: {'$regex': degree}, gradYear : {$gte: year || 0, $lte: year || 9999}}).exec((err, results) => {
-        if (err) {return next(err);}
-        res.render('admin_dashboard.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: results}); 
-    });
-});
+// router.get('/search', isLoggedIn, (req, res, next) => {
+//     occu = req.query.occupation;
+//     degree = req.query.degreetype;
+//     year = req.query.gradyear;
+//     Alumni.find({ occupation: {'$regex': occu} ,degreeType: {'$regex': degree}, gradYear : {$gte: year || 0, $lte: year || 9999}}).exec((err, results) => {
+//         if (err) {return next(err);}
+//         res.render('admin_dashboard.pug', {title: 'Search', stylesheet: '/styles/dashboard.css', alumni_list: results}); 
+//     });
+// });
 
 
 // Register an Admin

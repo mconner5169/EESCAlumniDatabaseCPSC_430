@@ -1,0 +1,46 @@
+fieldset.form{
+	background-color: white;
+	width: 550px;
+	height: auto;
+    margin-left: 150px;
+	padding: 20px;
+	margin-top: 25px;
+	border-radius: 5px;
+	box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+	display: inline-block;
+}
+
+fieldset.status {
+	background-color: white;
+	margin-left: 150px;
+	margin-top: 25px;
+	width: 550px; 
+	height: auto;           
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+	display: inline-block;
+}
+
+div.homebutton-style {
+	width: 291px;
+	height: 80px;
+    border-radius: 10px;
+	margin-left: auto;
+}
+div.leftbutton {
+    width: 291;
+    margin-bottom: 20px;
+    padding: 5px;
+	border-radius: 10px;
+    display: inline-block;
+    margin: 175px 100px auto 210px;
+}
+div.rightbutton {
+    width: 291;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 120px 30px auto 210px;
+}

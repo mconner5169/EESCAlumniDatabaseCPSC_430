@@ -49,6 +49,7 @@ div.leftbutton-style {
     display: inline-block;
     margin: 175px 100px auto 210px;
 }
+
 div.transparent {
     background-color: darkgray;
     background-color: rgba(0,0,0,0.5);

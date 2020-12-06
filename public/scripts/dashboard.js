@@ -92,6 +92,7 @@ document.querySelector('.alumni_form').addEventListener('submit', (event) => {
 });
 
 document.querySelector('#search').addEventListener('click', (event) => {
+    console.log("here")
     let gradYear = document.querySelector('#searchGradYear').value;
     let degreeType = document.querySelector('#searchDegreeType').value;
     let occupation = document.querySelector('#searchOccupation').value;
@@ -265,7 +266,7 @@ function renderTable() {
 
 function renderTablefirstName(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams, (alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.firstName.toUpperCase(); let textB = b.firstName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -299,7 +300,7 @@ function renderTablefirstName(isReverse) {
 
 function renderTablelastName(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams,(alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.lastName.toUpperCase(); let textB = b.lastName.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -332,7 +333,7 @@ function renderTablelastName(isReverse) {
 
 function renderTablegradYear(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams,(alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.gradYear; let textB = b.gradYear; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -365,7 +366,7 @@ function renderTablegradYear(isReverse) {
 
 function renderTabledegreeType(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams,(alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.degreeType; let textB = b.degreeType; return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -399,7 +400,7 @@ function renderTabledegreeType(isReverse) {
 
 function renderTableoccupation(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams,(alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.occupation.toUpperCase(); let textB = b.occupation.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -433,7 +434,7 @@ function renderTableoccupation(isReverse) {
 
 function renderTableemail(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams,(alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.email.toUpperCase(); let textB = b.email.toUpperCase(); return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;});
         }
@@ -468,7 +469,7 @@ function renderTableemail(isReverse) {
 
 function renderTableemailList(isReverse) {
 
-    GET_alumni_sortentries((alumnis) => {
+    GET_alumni_sortentries(alumniParams,(alumnis) => {
         if (!isReverse) {
             alumnis.sort(function(a, b) {let textA = a.emailList; let textB = b.emailList; return (textA === textB) ? 0 : textA ? -1 : 1});
         }

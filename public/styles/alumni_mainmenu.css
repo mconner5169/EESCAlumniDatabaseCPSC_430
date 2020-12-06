@@ -1,6 +1,6 @@
 fieldset.form{
 	background-color: white;
-	width: 550px;
+	width: 500px;
 	height: auto;
     margin-left: 150px;
 	padding: 20px;
@@ -12,9 +12,22 @@ fieldset.form{
 
 fieldset.status {
 	background-color: white;
-	margin-left: 150px;
+	margin-left: 10px;
 	margin-top: 25px;
-	width: 550px; 
+	margin-right: 10px;
+	width: 500px; 
+	height: auto;           
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+	display: inline-block;
+}
+
+fieldset.status1 {
+	background-color: white;
+	margin-right: 10px;
+	margin-top: 25px;
+	width: 500px; 
 	height: auto;           
 	padding: 20px;
 	border-radius: 5px;

@@ -1,11 +1,10 @@
-
 nav {
     background-color: rgb(0, 43, 90);
 }
 
 .card {
     width: 22rem;
-    height: 10rem;
+    height: 8rem;
     margin: auto;
     transition: width 300ms ease, height 300ms 300ms ease;
     z-index: 0;

@@ -48,7 +48,7 @@ function expand(alumni) {
         document.querySelector('#email-search').classList.toggle('col-md-10', true);
         document.querySelector('#search-btn-container').classList.toggle('col-md-2', true);
     }
-    document.querySelector('.card').style.height = '36rem';
+    document.querySelector('.card').style.height = '40rem';
     setTimeout( () => {
         document.querySelector('#alumni_entry').style.display = 'block';
         document.querySelector('.card').classList.toggle('expanded', true);

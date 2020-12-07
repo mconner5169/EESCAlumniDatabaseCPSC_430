@@ -5,7 +5,7 @@ nav {
 
 .card {
     width: 22rem;
-    height: 8rem;
+    height: 10rem;
     margin: auto;
     transition: width 300ms ease, height 300ms 300ms ease;
     z-index: 0;

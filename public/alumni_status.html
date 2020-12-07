@@ -15,7 +15,7 @@
 
         <!-- Nav -->
         <nav class="navbar navbar-dark">
-            <a class="navbar-brand navbar-nav mx-auto" href="/">UMW Earth and Envirnmental Science Alumni Database</a>
+            <a class="navbar-brand navbar-nav mx-auto" href="/">UMW Earth and Environmental Science Alumni Database</a>
         </nav>
 
 
@@ -30,7 +30,12 @@
                                 <button id='submit' class='btn btn-primary' type='button'>Search</button>
                             </div>
                         </div>
+                        <div class="col-4" id='contact-admin'>
+                            <button type="button" class="btn btn-primary" onclick="location.href='/alumni/contact'">Contact Admin</button>  
+                        </div>
                     </div>
+
+                   
 
 
                     <form id="alumni_entry" style='display: none'>
@@ -53,11 +58,20 @@
                         </div>
                         <div class="form-group"><label for="occupation">Occupation</label><input class="form-control" id="occupation" type="text" name="occupation" readonly /></div>
                         <div class="form-group"><label for="description">Description</label><textarea class="form-control" id="description" type="text" name="description" readonly ></textarea></div>
+                    
+                        <div class="form-row">
+                            <div class="col">
+                                <button type="button" class="btn btn-primary" onclick="location.href='/alumni/contact'">Contact Admin</button>  
+                            </div>
+                        </div>
+                         
+                    
                     </form>
 
-
-                    
+                 
                 </div>
+                
+                
             </div>
         </div>
 

@@ -10,6 +10,13 @@ nav {
     overflow: hidden;
 }
 
+div.homebutton-style {
+    width: 291px;
+    height: 80px;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
 .expanded {
     transition: width 300ms 300ms ease, height 300ms ease;
 }

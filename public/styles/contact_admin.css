@@ -12,15 +12,11 @@ div.headerbackground {
     background-size: 100% 15%;
 }
 
-div.transparent {
-    background-color: darkgray;
-    background-color: rgba(0,0,0,0.5);
-    margin-bottom: auto;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    padding-bottom: 493px;
-    height: 100%;
+div.homebutton-style {
+    width: 291px;
+    height: 80px;
+    border-radius: 10px;
+    margin-left: auto;
 }
 
 h2 {

@@ -38,8 +38,9 @@ function expand(alumni) {
     document.querySelector('#email').value = alumni.email;
     document.querySelector('#occupation').value = alumni.occupation;
     document.querySelector('#description').value = alumni.description;
-
-
+    document.querySelector('#emailList').checked = alumni.emailList;
+    document.querySelector('#emailList').setAttribute('disabled', true);
+    //alumni.emailList == 'on' ? 'yes' : 'no';
 
     if (window.innerWidth <= 768) {
         document.querySelector('.card').style.width = '100%';
@@ -48,7 +49,7 @@ function expand(alumni) {
         document.querySelector('#email-search').classList.toggle('col-md-10', true);
         document.querySelector('#search-btn-container').classList.toggle('col-md-2', true);
     }
-    document.querySelector('.card').style.height = '40rem';
+    document.querySelector('.card').style.height = '45rem';
     setTimeout( () => {
         document.querySelector('#alumni_entry').style.display = 'block';
         document.querySelector('.card').classList.toggle('expanded', true);

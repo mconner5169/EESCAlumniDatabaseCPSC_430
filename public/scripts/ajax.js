@@ -85,9 +85,9 @@ function GET_alumni_entries(params, callback) {
 }
 
 // Sorting alumni entries using headers
-function GET_alumni_sortentries(callback) {
+function GET_alumni_sortentries(params, callback) {
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', '/api/alumnis?');
+    xhr.open('GET', '/api/alumnis?' + params, true);
     xhr.send();
 
     xhr.onload = function() {

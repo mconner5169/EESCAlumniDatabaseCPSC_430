@@ -13,7 +13,11 @@ router.get('/alumnis', (req, res, next) => {
     let query = {};
     for(let key in req.query){ 
         if (Number.isNaN(parseInt(req.query[key]))) {
-            req.query[key] !== "" ? query[key] = {$regex: req.query[key]} : null;
+            if (key == 'email' || key == '_id') {
+                req.query[key] !== "" ? query[key] = req.query[key] : null;
+            } else {
+                req.query[key] !== "" ? query[key] = {$regex: req.query[key]} : null;
+            }
         } else {
             req.query[key] !== "" ? query[key] = {$eq: req.query[key]} : null;
         }

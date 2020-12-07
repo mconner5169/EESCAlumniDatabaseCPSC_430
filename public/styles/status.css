@@ -1,5 +1,31 @@
-#container {
-    transition: all 0.6s;
+
+nav {
+    background-color: rgb(0, 43, 90);
+}
+
+.card {
+    width: 22rem;
+    height: 8rem;
+    margin: auto;
+    transition: width 300ms ease, height 300ms 300ms ease;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.expanded {
+    transition: width 300ms 300ms ease, height 300ms ease;
+}
+
+.test {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: brown;
+    z-index: -1;
+}
+
+#alumni_entry {
+    z-index: 2;
 }
 h2 {
     font-size: 36px;

@@ -22,10 +22,9 @@
 
         <!-- Nav 
         <nav class="navbar navbar-dark">
-            <a class="navbar-brand navbar-nav mx-auto" href="/">UMW Earth and Envirnmental Science Alumni Database</a>
+            <a class="navbar-brand navbar-nav mx-auto" href="/">UMW Earth and Environmental Science Alumni Database</a>
         </nav>
     -->
-
 
         <div class="container mt-5" id='container'>
             <div class="card">
@@ -39,7 +38,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <form id="alumni_entry" style='display: none'>
                         <div class="form-row">
@@ -61,9 +59,11 @@
                         </div>
                         <div class="form-group"><label for="occupation">Occupation</label><input class="form-control" id="occupation" type="text" name="occupation" readonly /></div>
                         <div class="form-group"><label for="description">Description</label><textarea class="form-control" id="description" type="text" name="description" readonly ></textarea></div>
-                    </form> 
-
-
+                        <div class="form-group"><label for="emailList">Subscribed to Email</label><input class="form-control" style="height: 20px; width: 20px" id="emailList" type="checkbox" name="emailList" readonly ></div>
+                        <div class='row m-0'> 
+                            <button type="button" class="btn btn-primary" onclick="location.href='/alumni/contact'">Contact Admin</button>  
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

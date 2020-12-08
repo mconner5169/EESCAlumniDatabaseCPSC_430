@@ -24,7 +24,7 @@ div.homebutton-style {
 div.earth {
     background-image: url('earth.jpg');
     background-repeat: no-repeat;
-    background-size: 50% 85%;
+    background-size: 600px 600px;
     background-attachment: fixed; 
     background-position: center;
 }

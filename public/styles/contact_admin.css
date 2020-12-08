@@ -1,15 +1,17 @@
-div.earth {
-    background-image: url('earth.jpg');
-    background-repeat: no-repeat;
-    background-size: 50% 85%;
-    background-attachment: fixed; 
-    background-position: center;
+nav {
+    background-color: rgb(0, 43, 90);
 }
 
-div.headerbackground {
-    background-image: url('umw-primary-logo-white.png');
-    background-color: rgb(0, 43, 90);
-    background-size: 100% 15%;
+.card {
+    width: 40rem;
+    height: 15rem;
+    margin: auto;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.expanded {
+    transition: width 300ms 300ms ease, height 300ms ease;
 }
 
 div.homebutton-style {
@@ -19,17 +21,26 @@ div.homebutton-style {
     margin-left: auto;
 }
 
-h2 {
-    font-size: 36px;
-    color: #ffffff;
-    text-align: center;
-    position: relative;
-    padding: 15px;
+div.earth {
+    background-image: url('earth.jpg');
+    background-repeat: no-repeat;
+    background-size: 600px 600px;
+    background-attachment: fixed; 
+    background-position: center;
+}
+div.transparent {
+    background-color: darkgray;
+    background-color: rgba(0,0,0,0.5);
+    margin-bottom: auto;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-bottom: 800px;
+    height: 75%;
 }
 
-.card {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
+div.headerbackground {
+    background-image: url('umw-primary-logo-white.png');
+    background-color: rgb(0, 43, 90);
+    background-size: 100% 15%;
+}

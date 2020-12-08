@@ -25,6 +25,10 @@ function renderAlumni() {
                 } else {
                 expand(alumni);     
                 }           
+            } else {
+                // document.querySelector('.card').classList.toggle('expanded', true);
+                // document.querySelector('#error-msg').innerHTML = 'No entries found. This email is either incorrect or the entry has been deleted.';
+                // document.querySelector('.card').style.height = '11rem';
             }
         })
     }
@@ -38,8 +42,15 @@ function expand(alumni) {
     document.querySelector('#email').value = alumni.email;
     document.querySelector('#occupation').value = alumni.occupation;
     document.querySelector('#description').value = alumni.description;
+    document.querySelector('#emailList').checked = alumni.emailList;
+    document.querySelector('#emailList').setAttribute('disabled', true);
+    document.querySelector('#status').innerHTML = alumni.status.toUpperCase();
 
-
+    if (alumni.status == 'approved') {
+        document.querySelector('#status').classList.add('text-success');
+    } else if (alumni.status == 'pending') {
+        document.querySelector('#status').classList.add('text-warning');
+    }
 
     if (window.innerWidth <= 768) {
         document.querySelector('.card').style.width = '100%';

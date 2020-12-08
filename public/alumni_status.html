@@ -14,17 +14,11 @@
     </head>
     <body>
         <div class="earth">
-        <div class="transparent">
-            <div class="headerbackground" style="background-size: 20% 90%; background-repeat: no-repeat; ">
+        <div class="transparent"  style='height: 47rem;'>
+            <div class="headerbackground" style="background-size: 20% 90%; background-repeat: no-repeat;" type="button" onclick="location.href='/'">
                 <h2>Earth and Environmental Science Alumni Database
             <br>College of Arts and Science</h2>
             </div>  
-
-        <!-- Nav 
-        <nav class="navbar navbar-dark">
-            <a class="navbar-brand navbar-nav mx-auto" href="/">UMW Earth and Envirnmental Science Alumni Database</a>
-        </nav>
-    -->
 
 
         <div class="container mt-5" id='container'>
@@ -39,38 +33,63 @@
                             </div>
                         </div>
                     </div>
-
+                    <p id='error-msg' class='text-danger'></p>
 
                     <form id="alumni_entry" style='display: none'>
                         <div class="form-row">
                             <div class="col">
-                                <div class="form-group"><label for="firstName">First Name</label><input class="form-control" id="firstName" type="text" name="firstName" readonly /></div>
+                                <div class="form-group">
+                                    <label for="firstName">First Name</label>
+                                    <input class="form-control" id="firstName" type="text" name="firstName" readonly />
+                                </div>
                             </div>
                             <div class="col">
-                                <div class="form-group"><label for="lastName">Last Name</label><input class="form-control" id="lastName" type="text" name="lastName" readonly/></div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name</label>
+                                    <input class="form-control" id="lastName" type="text" name="lastName" readonly/>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group"><label for="email">Email</label><input class="form-control" id="email" type="email" name="email" readonly /></div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input class="form-control" id="email" type="email" name="email" readonly />
+                        </div>
                         <div class="form-row">
                             <div class="col">
-                                <div class="form-group"><label for="gradYear">Graduation Year</label><input class="form-control" id="gradYear" type="number" name="gradYear" readonly /></div>
+                                <div class="form-group">
+                                    <label for="gradYear">Graduation Year</label>
+                                    <input class="form-control" id="gradYear" type="number" name="gradYear" readonly />
+                                </div>
                             </div>
                             <div class="col">
-                                <div class="form-group"><label for="degreeType">Degree</label><input class="form-control" id="degreeType" type="text" name="degreeType" readonly /></div>
+                                <div class="form-group">
+                                    <label for="degreeType">Degree</label>
+                                    <input class="form-control" id="degreeType" type="text" name="degreeType" readonly />
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group"><label for="occupation">Occupation</label><input class="form-control" id="occupation" type="text" name="occupation" readonly /></div>
-                        <div class="form-group"><label for="description">Description</label><textarea class="form-control" id="description" type="text" name="description" readonly ></textarea></div>
-                    </form> 
-
-
+                        <div class="form-group">
+                            <label for="occupation">Occupation</label>
+                            <input class="form-control" id="occupation" type="text" name="occupation" readonly />
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" type="text" name="description" readonly ></textarea>
+                        </div>
+                        <div class="form-group form-inline">
+                            <label for="emailList">Subscribed to Email:</label>
+                            <input class="form-control ml-3" style="height: 20px; width: 20px" id="emailList" type="checkbox" name="emailList" readonly >
+                            <div class="ml-auto">
+                                <label for='status'>Status:&nbsp&nbsp<span id='status'></span></label>
+                            </div>
+                        </div>
+                        <div class='row m-0'>
+                            <a class='btn btn-primary mb-3' role='button' href='/alumni/contact'>Contact Admin</a>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        <br><br><br><br><br><br>
-        <div class="homebutton-style">
-                <input style="height:80px; font-style: 20px; background-color: rgb(102,102,102); border-color: rgb(102,102,102); font-weight: bold;" type="button" onclick="location.href='/'" class="btn btn-primary" value="Home Page">
-        </div>  
         </div>
         </div>
 
